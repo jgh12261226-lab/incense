@@ -7,7 +7,32 @@ export default function Header({ cartCount = 0, onCartOpen, onLoginOpen, isLogge
   const [activeSection, setActiveSection] = useState('hero');
   const [isBadgeBouncing, setIsBadgeBouncing] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [sparks, setSparks] = useState([]);
   const menuRef = useRef(null);
+
+  const triggerSparks = (e, buttonId) => {
+    const count = 10;
+    const newSparks = [];
+    for (let i = 0; i < count; i++) {
+      const angle = Math.random() * Math.PI * 2;
+      const distance = 15 + Math.random() * 30;
+      const size = 1.5 + Math.random() * 2.5;
+      const duration = 0.35 + Math.random() * 0.25;
+      newSparks.push({
+        id: Math.random(),
+        buttonId,
+        x: Math.cos(angle) * distance,
+        y: Math.sin(angle) * distance,
+        size,
+        duration,
+      });
+    }
+    setSparks((prev) => [...prev, ...newSparks]);
+    setTimeout(() => {
+      setSparks((prev) => prev.filter((s) => !newSparks.includes(s)));
+    }, 600);
+  };
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -110,6 +135,7 @@ export default function Header({ cartCount = 0, onCartOpen, onLoginOpen, isLogge
         <div className="header-actions">
           <button
             className="custom-order-btn"
+            onMouseEnter={(e) => triggerSparks(e, 'consult')}
             onClick={(e) => {
               e.preventDefault();
               const element = document.getElementById('epilogue');
@@ -127,6 +153,18 @@ export default function Header({ cartCount = 0, onCartOpen, onLoginOpen, isLogge
             }}
           >
             컨설팅 신청 <Zap size={14} className="header-btn-icon" />
+            {sparks.filter(s => s.buttonId === 'consult').map(spark => (
+              <span 
+                key={spark.id}
+                className="ember-spark"
+                style={{
+                  '--spark-x': `${spark.x}px`,
+                  '--spark-y': `${spark.y}px`,
+                  '--spark-size': `${spark.size}px`,
+                  '--spark-dur': `${spark.duration}s`
+                }}
+              />
+            ))}
           </button>
         </div>
       </div>
@@ -155,8 +193,10 @@ export default function Header({ cartCount = 0, onCartOpen, onLoginOpen, isLogge
         {/* 장바구니 버튼 */}
         <button
           className="header-cart-btn"
+          onMouseEnter={(e) => triggerSparks(e, 'cart')}
           onClick={onCartOpen}
           aria-label="Open Cart"
+          style={{ position: 'relative' }}
         >
           <div className="cart-icon-wrapper">
             <ShoppingBag size={18} className="header-cart-icon" />
@@ -166,6 +206,18 @@ export default function Header({ cartCount = 0, onCartOpen, onLoginOpen, isLogge
               </span>
             )}
           </div>
+          {sparks.filter(s => s.buttonId === 'cart').map(spark => (
+            <span 
+              key={spark.id}
+              className="ember-spark"
+              style={{
+                '--spark-x': `${spark.x}px`,
+                '--spark-y': `${spark.y}px`,
+                '--spark-size': `${spark.size}px`,
+                '--spark-dur': `${spark.duration}s`
+              }}
+            />
+          ))}
         </button>
 
         {/* 햄버거 메뉴 버튼 */}

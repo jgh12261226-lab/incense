@@ -28,6 +28,142 @@ export default function EpilogueSection({ isIgnited, onIgnite }) {
   const [isConsultingOpen, setIsConsultingOpen] = useState(false);
   const sectionRef = useRef(null);
 
+  // 신규: 유체 연기 시뮬레이션용 상태 및 레퍼런스
+  const canvasRef = useRef(null);
+  const smokeParticles = useRef([]);
+  const mousePos = useRef({ x: 0, y: 0, vx: 0, vy: 0, lastX: 0, lastY: 0, lastTime: 0 });
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    
+    // 캔버스 크기를 섹션의 전체 높이와 너비에 맞게 동적으로 조정
+    const resizeCanvas = () => {
+      if (sectionRef.current) {
+        const rect = sectionRef.current.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+      } else {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+    };
+    
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    // 섹션이 화면에 보일 때 크기가 바뀔 수 있으므로 엇갈림 resize 수행
+    const resizeTimeout = setTimeout(resizeCanvas, 500);
+
+    let animationFrameId;
+
+    const updateAndRender = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      const particles = smokeParticles.current;
+      for (let i = particles.length - 1; i >= 0; i--) {
+        const p = particles[i];
+        
+        // 이동 및 물리 작용 (미세한 감속 및 상승 기류)
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy -= 0.06; // 미세 부력
+        p.vx *= 0.98; // 공기 저항
+        p.vy *= 0.98;
+        
+        // 확산 (시간에 따라 서서히 커짐)
+        p.size += 0.6;
+        
+        // 소멸
+        p.alpha -= p.decay;
+        
+        if (p.alpha <= 0 || p.size <= 0) {
+          particles.splice(i, 1);
+          continue;
+        }
+
+        // 그리기
+        ctx.save();
+        ctx.beginPath();
+        // 부드러운 유체 연기를 위해 그라디언트 칠하기
+        const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
+        
+        // 투명도 변환
+        const baseColor = p.color
+          .replace('0.18', p.alpha.toFixed(3))
+          .replace('0.14', p.alpha.toFixed(3))
+          .replace('0.22', p.alpha.toFixed(3))
+          .replace('0.18', p.alpha.toFixed(3));
+          
+        grad.addColorStop(0, baseColor);
+        grad.addColorStop(1, 'rgba(0,0,0,0)');
+        
+        ctx.fillStyle = grad;
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      animationFrameId = requestAnimationFrame(updateAndRender);
+    };
+
+    updateAndRender();
+
+    return () => {
+      window.removeEventListener('resize', resizeCanvas);
+      clearTimeout(resizeTimeout);
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, []);
+
+  const handleMouseMove = (e) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const now = performance.now();
+    
+    const m = mousePos.current;
+    const dt = now - m.lastTime;
+    
+    if (dt > 0) {
+      m.vx = (x - m.lastX) / dt;
+      m.vy = (y - m.lastY) / dt;
+    }
+    
+    m.lastX = x;
+    m.lastY = y;
+    m.lastTime = now;
+    
+    // 마우스 이동 속도 (절대값)
+    const speed = Math.sqrt(m.vx * m.vx + m.vy * m.vy);
+    
+    // 속도가 일정 이상일 때만 파티클 다량 생성
+    const particleCount = Math.min(Math.floor(speed * 8) + 1, 6);
+    
+    const colors = [
+      'rgba(255, 107, 53, 0.18)', // 시그니처 오렌지
+      'rgba(229, 169, 59, 0.14)', // 황동 골드
+      'rgba(43, 40, 34, 0.22)',   // 딥 차콜
+      'rgba(26, 25, 22, 0.18)'    // 다크 스모크
+    ];
+
+    for (let i = 0; i < particleCount; i++) {
+      smokeParticles.current.push({
+        x: x + (Math.random() - 0.5) * 20,
+        y: y + (Math.random() - 0.5) * 20,
+        vx: m.vx * 0.35 + (Math.random() - 0.5) * 1.2,
+        vy: m.vy * 0.35 + (Math.random() - 0.5) * 1.2 - 0.2, // 위로 솟는 경향 추가
+        size: 20 + Math.random() * 30,
+        alpha: 0.35 + Math.random() * 0.45,
+        decay: 0.005 + Math.random() * 0.007,
+        color: colors[Math.floor(Math.random() * colors.length)]
+      });
+    }
+  };
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -144,7 +280,12 @@ export default function EpilogueSection({ isIgnited, onIgnite }) {
   };
 
   return (
-    <section className={`epilogue-section ${hasScrolledIn ? 'scrolled-in' : ''}`} ref={sectionRef}>
+    <section 
+      className={`epilogue-section ${hasScrolledIn ? 'scrolled-in' : ''}`} 
+      ref={sectionRef}
+      onMouseMove={handleMouseMove}
+    >
+      <canvas ref={canvasRef} className="fluid-smoke-canvas" />
       <div className="epilogue-container">
         
         {/* 최종 가치 제안 헤더 - 공통 section-header-row 포맷 (scrolled-in 모션 보존) */}

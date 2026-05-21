@@ -241,7 +241,7 @@ export default function CartDrawer({ isOpen, onClose, cartItems, onRemoveItem, o
             
             <h4 className="hud-loading-title font-mono">SECURE VIP TRANSACTION</h4>
             <div className="hud-terminal-log-box">
-              <div className="hud-log-cursor-line font-mono">> {hudMessage}</div>
+              <div className="hud-log-cursor-line font-mono">&gt; {hudMessage}</div>
               <div className="hud-log-subline font-mono">DO NOT CLOSE THIS PANEL. CRYPTOGRAPHIC HANDSHAKE IN PROGRESS...</div>
             </div>
             

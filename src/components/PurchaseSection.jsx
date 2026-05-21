@@ -8,7 +8,7 @@ export default function PurchaseSection({ isIgnited, onIgnite, addToCart, select
   const [showCartToast, setShowCartToast] = useState(false);
   const [pulseCount, setPulseCount] = useState(17); // 남은 수량 실시간 펄스용
   const [viewCount, setViewCount] = useState(86);  // 실시간 조회수
-
+  const [flyingItems, setFlyingItems] = useState([]);
   const [hasScrolledIn, setHasScrolledIn] = useState(false);
 
   // 화면 스크롤 시 섹션이 뷰포트 중앙에 도달하면 자동으로 점화식(onIgnite) 트리거
@@ -54,6 +54,8 @@ export default function PurchaseSection({ isIgnited, onIgnite, addToCart, select
       });
     }, 4000);
     return () => clearInterval(timer);
+  }, [pulseCount]);
+
   const handleCardMouseMove = (e) => {
     const card = e.currentTarget;
     const rect = card.getBoundingClientRect();
@@ -106,7 +108,33 @@ export default function PurchaseSection({ isIgnited, onIgnite, addToCart, select
     }
   ];
 
-  const handleBuyClick = () => {
+  const handleBuyClick = (e) => {
+    const startX = e ? e.clientX : window.innerWidth / 2;
+    const startY = e ? e.clientY : window.innerHeight / 2;
+
+    const cartBtn = document.querySelector('.header-cart-btn');
+    let targetX = window.innerWidth - 60;
+    let targetY = 40;
+    if (cartBtn) {
+      const rect = cartBtn.getBoundingClientRect();
+      targetX = rect.left + rect.width / 2;
+      targetY = rect.top + rect.height / 2;
+    }
+
+    const newId = Date.now();
+    const emoji = selectedOption === 'bundle' 
+      ? incenseCans[selectedCan].icon 
+      : (selectedOption === 'stick' ? '🪵' : '🥫');
+
+    setFlyingItems(prev => [...prev, {
+      id: newId,
+      startX,
+      startY,
+      targetX,
+      targetY,
+      emoji
+    }]);
+
     // 실제 장바구니에 아이템을 추가
     if (addToCart) {
       addToCart({
@@ -115,6 +143,16 @@ export default function PurchaseSection({ isIgnited, onIgnite, addToCart, select
         canName: selectedOption === 'bundle' ? incenseCans[selectedCan].name.split(' ')[0] : undefined
       });
     }
+
+    // 850ms 비행 종료 후 골인 충격 클래스 주입 및 소멸
+    setTimeout(() => {
+      const cartElement = document.querySelector('.header-cart-btn');
+      if (cartElement) {
+        cartElement.classList.add('cart-bounce-shock');
+        setTimeout(() => cartElement.classList.remove('cart-bounce-shock'), 400);
+      }
+      setFlyingItems(prev => prev.filter(item => item.id !== newId));
+    }, 850);
 
     // 토스트 알림 노출
     setShowCartToast(true);
@@ -322,7 +360,7 @@ export default function PurchaseSection({ isIgnited, onIgnite, addToCart, select
                 {/* 무지갯빛 네온 그라데이션 구매하기 버튼 */}
                 <button 
                   className={`neon-checkout-trigger-btn ${selectedOption === 'bundle' ? 'bundle-active' : ''}`}
-                  onClick={handleBuyClick}
+                  onClick={(e) => handleBuyClick(e)}
                 >
                   <ShoppingBag size={18} />
                   <span>
@@ -369,6 +407,21 @@ export default function PurchaseSection({ isIgnited, onIgnite, addToCart, select
         </div>
       </div>
 
+      {/* 신규: 3D 포물선 그래비티 투척 캔 노드 */}
+      {flyingItems.map(item => (
+        <div
+          key={item.id}
+          className="flying-cart-item"
+          style={{
+            '--start-x': `${item.startX}px`,
+            '--start-y': `${item.startY}px`,
+            '--target-x': `${item.targetX}px`,
+            '--target-y': `${item.targetY}px`
+          }}
+        >
+          <span className="flying-emoji">{item.emoji}</span>
+        </div>
+      ))}
     </section>
   );
 }

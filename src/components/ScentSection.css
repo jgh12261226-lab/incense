@@ -30,6 +30,7 @@
    1. 좌측 3D 인터랙티브 책장 플립 스타일
    ========================================= */
 .book-flip-viewport {
+  position: relative;
   width: 100%;
   height: 480px;
   perspective: 2000px;
@@ -44,6 +45,16 @@
   transition: transform 1.9s cubic-bezier(0.16, 1, 0.3, 1),
     opacity 1.6s cubic-bezier(0.16, 1, 0.3, 1),
     filter 1.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.vapor-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 12;
 }
 
 .book-flip-viewport.scrolled-in {

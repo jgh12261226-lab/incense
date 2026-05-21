@@ -6,6 +6,15 @@ export default function RevealSection({ isIgnited, onIgnite }) {
   const containerRef = useRef(null);
   const stickyRef = useRef(null);
   const [burnProgress, setBurnProgress] = useState(0);
+  const [mousePos, setMousePos] = useState({ x: 150, y: 150, isHovered: false });
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    setMousePos({ x, y, isHovered: true });
+  };
+
 
   useEffect(() => {
     const handleScroll = () => {
@@ -176,7 +185,17 @@ export default function RevealSection({ isIgnited, onIgnite }) {
 
             {/* 우측 수제 세라믹 열감 반응 챔버 플레이트 */}
             <div className="chamber-thermal-plate">
-              <div className="chamber-plate-rim">
+              <div 
+                className={`chamber-plate-rim ${mousePos.isHovered ? 'has-mouse' : ''}`}
+                onMouseMove={handleMouseMove}
+                onMouseEnter={() => setMousePos(prev => ({ ...prev, isHovered: true }))}
+                onMouseLeave={() => setMousePos(prev => ({ ...prev, isHovered: false }))}
+                style={{
+                  '--mouse-x': `${mousePos.x}px`,
+                  '--mouse-y': `${mousePos.y}px`,
+                  '--scroll-opacity': messageOpacity,
+                }}
+              >
                 
                 {/* 열감 스펙트럼 백그라운드 (스크롤에 따라 푸른색에서 강렬한 마젠타/오렌지로 물듦) */}
                 <div 
@@ -205,8 +224,8 @@ export default function RevealSection({ isIgnited, onIgnite }) {
                   className="ink-bleeding-message-layer"
                   style={{
                     filter: `url(#ink-bleed-filter) blur(${messageBlur}px)`,
-                    opacity: messageOpacity,
-                    pointerEvents: burnProgress >= 0.8 ? 'auto' : 'none'
+                    opacity: mousePos.isHovered ? 1 : messageOpacity,
+                    pointerEvents: burnProgress >= 0.8 || mousePos.isHovered ? 'auto' : 'none'
                   }}
                 >
                   <div className="ink-message-content">

@@ -7,6 +7,7 @@
   align-items: center;
   padding: 100px 20px 80px 20px;
   position: relative;
+  overflow: hidden; /* 캔버스 파티클 번짐 크롭 */
 }
 
 .epilogue-container {
@@ -15,6 +16,18 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  z-index: 5; /* 캔버스 유체 연기 위에 오도록 처리 */
+}
+
+.fluid-smoke-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
 }
 
 /* epilogue-header: section-header-row와 병합 사용 - 스크롤 입장 페이드인 모션 보존 */

@@ -11,6 +11,98 @@ export default function ScentSection({ isIgnited, onIgnite }) {
   const [hasScrolledIn, setHasScrolledIn] = useState(false);
   const autoFlipTriggered = useRef(false);
   const sectionRef = useRef(null);
+  
+  const canvasRef = useRef(null);
+  const particles = useRef([]);
+  const animationFrameId = useRef(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const resizeCanvas = () => {
+      canvas.width = canvas.parentElement.clientWidth;
+      canvas.height = canvas.parentElement.clientHeight;
+    };
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    
+    const ctx = canvas.getContext('2d');
+    
+    const loop = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      particles.current.forEach((p) => {
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy -= 0.02; // 은은하게 상승 기류
+        p.vx *= 0.98; // 바람 저항
+        p.life--;
+        
+        const opacity = Math.max(p.life / p.maxLife, 0);
+        ctx.fillStyle = p.color.replace(/rgba\(([^,]+),([^,]+),([^,]+),[^)]+\)/, `rgba($1,$2,$3,${opacity * 0.28})`);
+        
+        ctx.beginPath();
+        // 뿜어지며 서서히 넓게 번지는 훈연 연기 구름 모양
+        ctx.arc(p.x, p.y, p.size * (1 + (1 - opacity) * 1.5), 0, Math.PI * 2);
+        ctx.fill();
+      });
+      
+      particles.current = particles.current.filter((p) => p.life > 0);
+      animationFrameId.current = requestAnimationFrame(loop);
+    };
+    
+    loop();
+    
+    return () => {
+      window.removeEventListener('resize', resizeCanvas);
+      cancelAnimationFrame(animationFrameId.current);
+    };
+  }, []);
+
+  const triggerVaporTrail = (fromLeftToRight) => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    
+    const width = canvas.width;
+    const height = canvas.height;
+    
+    let startTime = Date.now();
+    const duration = 650;
+    
+    const emit = () => {
+      const elapsed = Date.now() - startTime;
+      const progress = elapsed / duration;
+      
+      if (progress < 1) {
+        const startX = width / 2;
+        // 왼쪽으로 넘어갈 때는 25%, 오른쪽으로 넘어갈 때는 75% 부근까지 그믐달 모양 궤적 생성
+        const targetX = fromLeftToRight ? width * 0.75 : width * 0.25;
+        const currentX = startX + (targetX - startX) * progress;
+        const currentY = height * 0.5 - Math.sin(progress * Math.PI) * 110;
+        
+        for (let i = 0; i < 3; i++) {
+          const vx = (Math.random() - 0.5) * 1.2 + (fromLeftToRight ? 0.8 : -0.8);
+          const vy = -1.2 - Math.random() * 1.5;
+          const size = 8 + Math.random() * 15;
+          const life = 50 + Math.random() * 30;
+          const color = Math.random() > 0.75 ? 'rgba(255, 107, 53, 0.25)' : 'rgba(234, 228, 217, 0.18)';
+          particles.current.push({
+            x: currentX,
+            y: currentY,
+            vx, vy,
+            size,
+            life,
+            maxLife: life,
+            color,
+          });
+        }
+        requestAnimationFrame(emit);
+      }
+    };
+    emit();
+  };
+
 
   // activePage 및 isAnimating의 최신 상태를 IntersectionObserver 내 타이머가 올바르게 참조하게 하기 위한 Ref
   const activePageRef = useRef(activePage);
@@ -74,33 +166,45 @@ export default function ScentSection({ isIgnited, onIgnite }) {
     // 1쪽 ➔ 2쪽 이동 (Leaf 1만 엎어짐)
     if (activePage === 1 && targetPage === 2) {
       setLeaf1Flipped(true);
+      triggerVaporTrail(true);
       setTimeout(() => setIsAnimating(false), 1000);
     }
     // 2쪽 ➔ 1쪽 역행 (Leaf 1 복귀)
     else if (activePage === 2 && targetPage === 1) {
       setLeaf1Flipped(false);
+      triggerVaporTrail(false);
       setTimeout(() => setIsAnimating(false), 1000);
     }
     // 2쪽 ➔ 3쪽 이동 (Leaf 2 엎어짐)
     else if (activePage === 2 && targetPage === 3) {
       setLeaf2Flipped(true);
+      triggerVaporTrail(true);
       setTimeout(() => setIsAnimating(false), 1000);
     }
     // 3쪽 ➔ 2쪽 역행 (Leaf 2 복귀)
     else if (activePage === 3 && targetPage === 2) {
       setLeaf2Flipped(false);
+      triggerVaporTrail(false);
       setTimeout(() => setIsAnimating(false), 1000);
     }
     // 1쪽 ➔ 3쪽 다중 플립 점프 (1 엎어지고 시간차 두고 2 엎어짐)
     else if (activePage === 1 && targetPage === 3) {
       setLeaf1Flipped(true);
-      setTimeout(() => setLeaf2Flipped(true), 150);
+      triggerVaporTrail(true);
+      setTimeout(() => {
+        setLeaf2Flipped(true);
+        triggerVaporTrail(true);
+      }, 150);
       setTimeout(() => setIsAnimating(false), 1150);
     }
     // 3쪽 ➔ 1쪽 다중 플립 점프 (2 복귀하고 시간차 두고 1 복귀)
     else if (activePage === 3 && targetPage === 1) {
       setLeaf2Flipped(false);
-      setTimeout(() => setLeaf1Flipped(false), 150);
+      triggerVaporTrail(false);
+      setTimeout(() => {
+        setLeaf1Flipped(false);
+        triggerVaporTrail(false);
+      }, 150);
       setTimeout(() => setIsAnimating(false), 1150);
     }
   };
@@ -276,6 +380,8 @@ export default function ScentSection({ isIgnited, onIgnite }) {
             </div>
 
           </div>
+          {/* 신규: 공기 역학적 연기 아지랑이 캔버스 */}
+          <canvas ref={canvasRef} className="vapor-canvas" />
         </div>
 
         {/* 2. 우측 영역: 그리드 & 향기 칩 (클릭 가능한 인터랙티브 버튼) */}
