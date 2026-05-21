@@ -139,7 +139,7 @@ export default function EpilogueSection({ isIgnited, onIgnite }) {
         
         {/* 최종 가치 제안 헤더 */}
         <div className="epilogue-header">
-          <span className="epilogue-badge">
+          <span className="section-badge">
             <span className="badge-num">05</span>
             <span className="badge-divider">/</span>
             <span className="badge-text">THE LAST SCENE & RITUAL</span>

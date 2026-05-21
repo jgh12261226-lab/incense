@@ -111,8 +111,10 @@ export default function PurchaseSection({ isIgnited, onIgnite, addToCart, select
         
         {/* 헤더 타이틀 */}
         <div className="purchase-header">
-          <span className="promo-badge-tag">
-            <Sparkles size={11} /> 100% HANDMADE INCENSE
+          <span className="section-badge">
+            <span className="badge-num">02</span>
+            <span className="badge-divider">/</span>
+            <span className="badge-text">100% HANDMADE INCENSE</span>
           </span>
           <h2 className="goblin-text purchase-title">
             향 스틱만 태우기엔<br />

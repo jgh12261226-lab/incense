@@ -103,7 +103,7 @@ export default function RevealSection({ isIgnited, onIgnite }) {
           
           {/* 리뉴얼된 프리미엄 테크 헤더 */}
           <div className="reveal-text-header">
-            <span className="reveal-badge">
+            <span className="section-badge">
               <span className="badge-num">04</span>
               <span className="badge-divider">/</span>
               <span className="badge-text">THERMAL SENSING & REVEAL</span>

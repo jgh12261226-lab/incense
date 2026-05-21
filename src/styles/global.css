@@ -304,3 +304,39 @@ p {
   font-family: var(--font-english);
   font-style: italic;
 }
+
+/* =========================================
+   공통 프리미엄 섹션 배지 (Section Badge)
+   ========================================= */
+.section-badge {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  margin-bottom: 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  background-color: rgba(255, 107, 53, 0.06);
+  border: 1px solid rgba(255, 107, 53, 0.2);
+  border-radius: 30px;
+  box-shadow: 0 0 15px rgba(255, 107, 53, 0.05);
+}
+
+.section-badge .badge-num {
+  color: var(--color-accent); /* 타오르는 불꽃 주홍색 */
+  font-weight: 900;
+}
+
+.section-badge .badge-divider {
+  color: rgba(234, 228, 217, 0.3);
+  font-weight: 400;
+  margin: 0 2px;
+}
+
+.section-badge .badge-text {
+  color: #ffb399; /* 부드러운 피치 오렌지 텍스트 */
+  font-weight: 800;
+  letter-spacing: 0.18em;
+}

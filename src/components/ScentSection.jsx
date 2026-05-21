@@ -256,6 +256,11 @@ export default function ScentSection({ isIgnited, onIgnite }) {
 
         {/* 2. 우측 영역: 그리드 & 향기 칩 (클릭 가능한 인터랙티브 버튼) */}
         <div className={`scent-info-panel ${animateChips ? 'panel-in' : ''}`}>
+          <span className="section-badge">
+            <span className="badge-num">03</span>
+            <span className="badge-divider">/</span>
+            <span className="badge-text">DEEP SCENT AFTERGLOW</span>
+          </span>
           <h2 className="goblin-text scent-section-title">
             연기가 사라진 다음날 아침까지,<br />
             그날의 <span className="accent-text">잔향</span>은 방에 남습니다.

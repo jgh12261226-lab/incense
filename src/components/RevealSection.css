@@ -65,38 +65,7 @@
   max-width: 800px;
 }
 
-.reveal-badge {
-  font-family: var(--font-body);
-  font-weight: 800;
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
-  margin-bottom: 15px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 12px;
-  background-color: rgba(255, 107, 53, 0.06);
-  border: 1px solid rgba(255, 107, 53, 0.2);
-  border-radius: 30px;
-  box-shadow: 0 0 15px rgba(255, 107, 53, 0.05);
-}
 
-.reveal-badge .badge-num {
-  color: #ff6b35; /* 타오르는 오렌지 열감 */
-  font-weight: 900;
-}
-
-.reveal-badge .badge-divider {
-  color: rgba(234, 228, 217, 0.3);
-  font-weight: 400;
-  margin: 0 2px;
-}
-
-.reveal-badge .badge-text {
-  color: #ffb399; /* 은은한 피치 오렌지 텍스트 */
-  font-weight: 800;
-  letter-spacing: 0.18em;
-}
 
 .reveal-title {
   font-size: 2.3rem;
