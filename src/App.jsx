@@ -130,6 +130,14 @@ export default function App() {
       {/* 1. 아날로그 미세 감성 그레인 노이즈 오버레이 */}
       <div className="grain-overlay" />
 
+      {/* 전역 고정 스크롤 인디케이터 (우하단 항상 표시) */}
+      <div className="scroll-indicator">
+        <span className="scroll-text">DOWN TO BURN</span>
+        <div className="scroll-mouse">
+          <div className="scroll-wheel"></div>
+        </div>
+      </div>
+
       {/* 2. 전역 무한 상승 연기 레이어 (랜딩페이지 끝까지 연기가 흐르는 연출) */}
       <div className="global-smoke-container">
         {smokeParticles.map((particle) => (

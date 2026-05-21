@@ -311,17 +311,18 @@ p {
 .section-badge {
   font-family: var(--font-body);
   font-weight: 800;
-  font-size: 0.75rem;
-  letter-spacing: 0.15em;
-  margin-bottom: 18px;
+  font-size: 0.9rem;
+  letter-spacing: 0.12em;
+  margin-bottom: 0;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 5px 12px;
+  gap: 7px;
+  padding: 8px 18px;
   background-color: rgba(255, 107, 53, 0.06);
   border: 1px solid rgba(255, 107, 53, 0.2);
   border-radius: 30px;
   box-shadow: 0 0 15px rgba(255, 107, 53, 0.05);
+  white-space: nowrap;
 }
 
 .section-badge .badge-num {
@@ -340,3 +341,85 @@ p {
   font-weight: 800;
   letter-spacing: 0.18em;
 }
+
+/* =========================================
+   공통 프리미엄 가로 섹션 헤더 (Unified Split Header)
+   배지(타이틀) 좌측 단독 | 설명+상세설명 우측 묶음
+   ========================================= */
+.section-header-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center; /* 배지와 설명 그룹을 수직 중앙 정렬 */
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 55px;
+  gap: 2rem;
+  text-align: left;
+}
+
+.section-header-row .header-left {
+  flex: 0 0 auto; /* 배지 너비만큼만 차지 (단독 타이틀) */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.section-header-row .header-right {
+  flex: 1; /* 남은 공간 전부 사용 */
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem; /* 설명(h2)과 상세설명(p) 사이 0.5rem으로 묶음 */
+  align-items: flex-start;
+}
+
+/* 모든 섹션 타이틀 통일 규격 */
+.section-title-unified {
+  font-size: 2.4rem;
+  line-height: 1.25;
+  margin-top: 0;
+  margin-bottom: 0;
+  word-break: keep-all;
+}
+
+.section-desc-main {
+  font-family: var(--font-body);
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: var(--color-primary);
+  font-weight: 800;
+  word-break: keep-all;
+}
+
+.section-desc-sub {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  line-height: 1.55;
+  color: var(--color-primary);
+  opacity: 0.65;
+  word-break: keep-all;
+}
+
+/* 모바일 및 태블릿 스크린 최적화 */
+@media (max-width: 900px) {
+  .section-header-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.8rem;
+    margin-bottom: 35px;
+  }
+  
+  .section-header-row .header-left,
+  .section-header-row .header-right {
+    flex: none;
+    width: 100%;
+  }
+  
+  .section-title-unified {
+    font-size: 1.95rem;
+  }
+  
+  .section-desc-main {
+    font-size: 1rem;
+  }
+}
+

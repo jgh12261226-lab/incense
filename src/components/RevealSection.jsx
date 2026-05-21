@@ -101,20 +101,27 @@ export default function RevealSection({ isIgnited, onIgnite }) {
 
         <div className="reveal-content-wrap">
           
-          {/* 리뉴얼된 프리미엄 테크 헤더 */}
-          <div className="reveal-text-header">
-            <span className="section-badge">
-              <span className="badge-num">04</span>
-              <span className="badge-divider">/</span>
-              <span className="badge-text">THERMAL SENSING & REVEAL</span>
-            </span>
-            <h2 className="goblin-text reveal-title">
-              열감 반응 그을음 속에,<br />
-              <span className="accent-text">숨겨진 진심</span>이 피어납니다.
-            </h2>
-            <p className="reveal-description">
-              스펙트럼 센서와 만났을 때, 가려져 있던 비밀의 메시지가 물결치는 잉크처럼 서서히 모양을 잡으며 드러납니다.
-            </p>
+          {/* 공통 가로 분할 헤더 (04번 온도 센서 섹션) */}
+          <div className="section-header-row" style={{ marginBottom: '30px' }}>
+            <div className="header-left">
+              <span className="section-badge">
+                <span className="badge-num">04</span>
+                <span className="badge-divider">/</span>
+                <span className="badge-text">THERMAL SENSING & REVEAL</span>
+              </span>
+            </div>
+            <div className="header-right">
+              <h2 className="goblin-text section-title-unified">
+                열감 반응 그을음 속에,<br />
+                <span className="accent-text">숨겨진 진심</span>이 피어납니다.
+              </h2>
+              <p className="section-desc-main">
+                온도 변화에 따라 닫혀 있던 검은 안막이 걷히며 아날로그 메시지가 서서히 피어오르는 순간.
+              </p>
+              <p className="section-desc-sub">
+                스틱의 열감이 닿을 때, 그을음 속에 가려진 당신만의 특별한 메시지가 물결치는 잉크처럼 정갈하고 극적으로 드러나는 세계 최초의 리빌링 시각화 챔버 기술입니다.
+              </p>
+            </div>
           </div>
 
           <div className="thermal-simulation-grid">

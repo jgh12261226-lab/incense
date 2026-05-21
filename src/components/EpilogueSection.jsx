@@ -137,20 +137,27 @@ export default function EpilogueSection({ isIgnited, onIgnite }) {
     <section className={`epilogue-section ${hasScrolledIn ? 'scrolled-in' : ''}`} ref={sectionRef}>
       <div className="epilogue-container">
         
-        {/* 최종 가치 제안 헤더 */}
-        <div className="epilogue-header">
-          <span className="section-badge">
-            <span className="badge-num">05</span>
-            <span className="badge-divider">/</span>
-            <span className="badge-text">THE LAST SCENE & RITUAL</span>
-          </span>
-          <h2 className="goblin-text epilogue-title">
-            이제 당신이 숨겨둔<br />
-            <span className="accent-text">진심</span>을 피울 차례입니다.
-          </h2>
-          <p className="epilogue-subtitle">
-            단 하나의 특별한 연기로 전하는 메시지 홀더 오브제
-          </p>
+        {/* 최종 가치 제안 헤더 - 공통 section-header-row 포맷 (scrolled-in 모션 보존) */}
+        <div className="section-header-row epilogue-header">
+          <div className="header-left">
+            <span className="section-badge">
+              <span className="badge-num">05</span>
+              <span className="badge-divider">/</span>
+              <span className="badge-text">THE LAST SCENE & RITUAL</span>
+            </span>
+          </div>
+          <div className="header-right">
+            <h2 className="goblin-text section-title-unified">
+              이제 당신이 숨겨둔<br />
+              <span className="accent-text">진심</span>을 피울 차례입니다.
+            </h2>
+            <p className="section-desc-main">
+              단 하나의 특별한 연기로 완성하는 공간의 품격과, 그 감동을 미리 경험한 이들의 진실된 기록.
+            </p>
+            <p className="section-desc-sub">
+              단순한 방향 소품을 넘어, 사람의 깊은 감정과 따뜻한 온도를 그대로 전달해 주는 시각적 오브제. 1:1 맞춤형 컨설팅을 통해 당신만의 시그니처 향 리추얼을 설계해 드립니다.
+            </p>
+          </div>
         </div>
 
         {/* 6개 리뷰 3D 슬라이더 캐러셀 영역 */}

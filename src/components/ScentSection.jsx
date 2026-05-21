@@ -115,8 +115,32 @@ export default function ScentSection({ isIgnited, onIgnite }) {
   return (
     <section className="scent-section" ref={sectionRef}>
       <div className="scent-container">
-        
+
+        {/* 공통 가로 분할 헤더 (03번 향기 섹션) */}
+        <div className="section-header-row">
+          <div className="header-left">
+            <span className="section-badge">
+              <span className="badge-num">03</span>
+              <span className="badge-divider">/</span>
+              <span className="badge-text">DEEP SCENT AFTERGLOW</span>
+            </span>
+          </div>
+          <div className="header-right">
+            <h2 className="goblin-text section-title-unified">
+              연기가 사라진 다음날 아침까지,<br />
+              그날의 <span className="accent-text">잔향</span>은 방에 남습니다.
+            </h2>
+            <p className="section-desc-main">
+              천연 원료의 섬세한 블렌딩이 공기 중에 오랫동안 포근하게 내려앉는 놀라운 시간적 경험.
+            </p>
+            <p className="section-desc-sub">
+              태울 때만 찌르는 인공 향이 아닙니다. 탑, 하트, 베이스 노트로 서서히 피어올라 다음 날 아침 문을 열었을 때 문득 느껴지는 묵직하고 따스한 여운을 만끽해 보세요.
+            </p>
+          </div>
+        </div>
+
         {/* 1. 좌측 영역: 4단 흩날림 3D 원근 북플립 뷰포트 */}
+        <div className="scent-body-grid">
         <div className={`book-flip-viewport ${animateChips ? 'scrolled-in' : ''}`}>
           <div className="open-book-3d">
             
@@ -256,16 +280,6 @@ export default function ScentSection({ isIgnited, onIgnite }) {
 
         {/* 2. 우측 영역: 그리드 & 향기 칩 (클릭 가능한 인터랙티브 버튼) */}
         <div className={`scent-info-panel ${animateChips ? 'panel-in' : ''}`}>
-          <span className="section-badge">
-            <span className="badge-num">03</span>
-            <span className="badge-divider">/</span>
-            <span className="badge-text">DEEP SCENT AFTERGLOW</span>
-          </span>
-          <h2 className="goblin-text scent-section-title">
-            연기가 사라진 다음날 아침까지,<br />
-            그날의 <span className="accent-text">잔향</span>은 방에 남습니다.
-          </h2>
-          
           <div className="scent-notes-grid">
             {scentNotes.map((note, index) => {
               const pageIdx = index + 1;
@@ -292,6 +306,7 @@ export default function ScentSection({ isIgnited, onIgnite }) {
           </div>
         </div>
 
+        </div>{/* /.scent-body-grid */}
       </div>
     </section>
   );

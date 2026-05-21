@@ -133,24 +133,28 @@ export default function HeroSection({ scrollProgress, isIgnited, onIgnite, onHer
       <div className="hero-content">
         {/* 고블린풍 볼드 헤드라인 */}
         {/* 고블린풍 볼드 헤드라인 (h1 단어 개별 stagger 찌글 모션 적용 및 p 태그 분리) */}
-        <div className="hero-headline-wrap">
-          <h1 className={`hero-title ${jiggleActive ? 'goblin-item-active' : ''}`}>
-            <span className="stagger-word goblin-text">번아웃(BURN)된</span>{' '}
-            <span className="stagger-word goblin-text">하루를</span><br />
-            <span className="stagger-word goblin-text">차분하게</span>{' '}
-            <span className="stagger-word goblin-text accent-text">식힐(CHILL)</span>{' '}
-            <span className="stagger-word goblin-text">시간.</span>
-          </h1>
-          <p className="hero-subtitle">
-            BURN TO CHILL, 진심이 아늑하게 머무는 공간 <Bed size={18} className="hero-subtitle-icon" />
-          </p>
+        {/* 공통 가로 분할 헤더 (01번 히어로 섹션) */}
+        <div className="section-header-row" style={{ marginBottom: '45px' }}>
+          <div className="header-left">
+            <span className="section-badge">
+              <span className="badge-num">01</span>
+              <span className="badge-divider">/</span>
+              <span className="badge-text">BURN TO CHILL ORIGIN</span>
+            </span>
+          </div>
+          <div className="header-right">
+            <h1 className={`hero-title goblin-text section-title-unified ${jiggleActive ? 'goblin-item-active' : ''}`}>
+              번아웃(BURN)된 하루를<br />
+              차분하게 <span className="accent-text">식힐(CHILL)</span> 시간.
+            </h1>
+            <p className="section-desc-main">
+              마음의 불을 지피고, 일상의 무거운 피로를 은은히 가라앉히는 감각의 서막.
+            </p>
+            <p className="section-desc-sub">
+              당신의 공간에 아날로그적인 온기를 더해, 바쁜 머릿속 잡념을 밀어내고 고요한 성찰을 선사하는 BURN TO CHILL의 리추얼 컬렉션입니다.
+            </p>
+          </div>
         </div>
-
-        <span className="section-badge" style={{ marginBottom: '30px' }}>
-          <span className="badge-num">01</span>
-          <span className="badge-divider">/</span>
-          <span className="badge-text">BURN TO CHILL ORIGIN</span>
-        </span>
 
         {/* 3D 양문형 펼침 게이트와 보관고 조립체 (호버 기반 개폐) */}
         <div 
@@ -266,13 +270,7 @@ export default function HeroSection({ scrollProgress, isIgnited, onIgnite, onHer
           </div>
         </div>
 
-        {/* 스크롤 유도 */}
-        <div className="scroll-indicator">
-          <span className="scroll-text">DOWN TO BURN</span>
-          <div className="scroll-mouse">
-            <div className="scroll-wheel"></div>
-          </div>
-        </div>
+
       </div>
     </section>
   );

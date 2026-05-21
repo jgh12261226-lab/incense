@@ -109,21 +109,27 @@ export default function PurchaseSection({ isIgnited, onIgnite, addToCart, select
 
       <div className="purchase-container">
         
-        {/* 헤더 타이틀 */}
-        <div className="purchase-header">
-          <span className="section-badge">
-            <span className="badge-num">02</span>
-            <span className="badge-divider">/</span>
-            <span className="badge-text">100% HANDMADE INCENSE</span>
-          </span>
-          <h2 className="goblin-text purchase-title">
-            향 스틱만 태우기엔<br />
-            <span className="promo-emphasis-text">2% 아쉬우니까.</span>
-          </h2>
-          <p className="purchase-desc">
-            스틱의 온전한 정취를 캔 속에 가두어 소장하는 가장 감각적인 기회.<br />
-            꿀조합 묶음 번들 패키지로 데려가고 <strong>파격적인 추가 할인 혜택</strong>을 만나보세요.
-          </p>
+        {/* 공통 가로 분할 헤더 (02번 구매 섹션) */}
+        <div className="section-header-row">
+          <div className="header-left">
+            <span className="section-badge">
+              <span className="badge-num">02</span>
+              <span className="badge-divider">/</span>
+              <span className="badge-text">100% HANDMADE INCENSE</span>
+            </span>
+          </div>
+          <div className="header-right">
+            <h2 className="goblin-text section-title-unified">
+              향 스틱만 태우기엔<br />
+              <span className="promo-emphasis-text">2% 아쉬우니까.</span>
+            </h2>
+            <p className="section-desc-main">
+              스틱의 온전한 정취를 전용 틴 캔 속에 안전하게 가두어 소장하는 가장 감각적인 기회.
+            </p>
+            <p className="section-desc-sub">
+              스틱과 캔의 시너지를 극대화하는 꿀조합 묶음 번들 패키지로, <strong>35% 할인된 특별 혜택가</strong>에 무료 배송으로 소장해 보세요.
+            </p>
+          </div>
         </div>
 
         {/* 메인 콘텐츠: 좌측 옵션 셀렉터 / 우측 번들 세부 캔 픽커 & 최종 결제 가속 카드 */}
