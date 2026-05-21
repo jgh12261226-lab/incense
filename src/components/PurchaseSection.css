@@ -116,7 +116,11 @@
   gap: 20px;
   cursor: pointer;
   position: relative;
+  overflow: hidden; /* 반사광 효과의 경계 내 크롭 */
   box-shadow: 6px 6px 0px #000;
+  
+  transform-style: preserve-3d;
+  will-change: transform;
   
   /* 스크롤 진입 전 상태 */
   opacity: 0;
@@ -129,6 +133,40 @@
               background-color 0.3s,
               opacity 0.8s ease,
               filter 0.8s ease;
+}
+
+/* 프리미엄 금속 Specular 반사광 효과 */
+.promo-option-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle 220px at var(--mx, 50%) var(--my, 50%),
+    rgba(255, 107, 53, 0.15) 0%,
+    rgba(255, 107, 53, 0.03) 60%,
+    transparent 100%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+}
+
+/* 추천 번들 세트 전용 럭셔리 황금 네온 반사광 */
+.promo-option-card.bundle-promo-card::before {
+  background: radial-gradient(
+    circle 250px at var(--mx, 50%) var(--my, 50%),
+    rgba(229, 169, 59, 0.22) 0%,
+    rgba(229, 169, 59, 0.05) 60%,
+    transparent 100%
+  );
+}
+
+.promo-option-card:hover::before {
+  opacity: 1;
 }
 
 /* 스태거 상승을 위한 0.1s 엇갈림 딜레이 */
@@ -150,9 +188,10 @@
 }
 
 .scrolled-in .promo-option-card:hover {
-  transform: translateY(-4px);
+  transform: perspective(1000px) rotateX(var(--card-tilt-x, 0deg)) rotateY(var(--card-tilt-y, 0deg)) translateY(-6px) scale(1.02);
   box-shadow: 10px 10px 0px #000;
   background-color: #2b2822;
+  transition: transform 0.1s ease, box-shadow 0.3s ease, background-color 0.3s ease;
   /* 호버 작동 시에는 딜레이 0s로 무효화 */
   transition-delay: 0s !important;
 }
@@ -282,6 +321,10 @@
   animation: focusBounce 0.45s cubic-bezier(0.175, 0.885, 0.45, 1.35) forwards;
 }
 
+.promo-option-card.active-option:hover {
+  animation: none;
+}
+
 /* 3번째 추천 번들 카드가 활성화되었을 때의 극적인 무지개 오로라 및 네온 광채 효과 */
 .promo-option-card.bundle-promo-card.active-option {
   border-color: #ff4500;
@@ -290,6 +333,10 @@
   background-size: 300% 300%;
   animation: focusBounce 0.45s cubic-bezier(0.175, 0.885, 0.45, 1.35) forwards,
              gradientFlow 8s infinite linear;
+}
+
+.promo-option-card.bundle-promo-card.active-option:hover {
+  animation: gradientFlow 8s infinite linear;
 }
 
 .promo-option-card.active-option .option-checkbox {
@@ -395,12 +442,39 @@
   align-items: center;
   gap: 8px;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.45, 1.25);
   position: relative;
+  overflow: hidden;
+  
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.15s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.3s, background-color 0.3s;
+}
+
+/* 개별 캔 컬러에 맞춘 실시간 3D Specular 반사광 */
+.picker-can-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle 80px at var(--mx, 50%) var(--my, 50%),
+    var(--can-color, var(--color-accent)) 0%,
+    transparent 100%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+}
+
+.picker-can-item:hover::before {
+  opacity: 0.22; /* 픽커 카드는 크기가 작으므로 은은하고 깔끔하게 0.22 강도로 제한 */
 }
 
 .picker-can-item:hover {
-  transform: translateY(-4px);
+  transform: perspective(600px) rotateX(var(--card-tilt-x, 0deg)) rotateY(var(--card-tilt-y, 0deg)) translateY(-5px) scale(1.03);
   border-color: rgba(234, 228, 217, 0.4);
 }
 

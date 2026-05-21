@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X, Sparkles, Send, Check } from 'lucide-react';
+import { X, Sparkles, Send, Check, Volume2, Package, Sparkle, Download } from 'lucide-react';
 import './ConsultingModal.css';
 
 export default function ConsultingModal({ isOpen, onClose }) {
@@ -12,6 +12,7 @@ export default function ConsultingModal({ isOpen, onClose }) {
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
   if (!isOpen) return null;
 
@@ -30,6 +31,22 @@ export default function ConsultingModal({ isOpen, onClose }) {
     });
   };
 
+  // 마우스 무브에 의한 3D 틸트 처리
+  const handleMouseMove = (e) => {
+    const card = e.currentTarget;
+    const box = card.getBoundingClientRect();
+    const x = e.clientX - box.left - (box.width / 2);
+    const y = e.clientY - box.top - (box.height / 2);
+    // 최대 12도 회전
+    const tiltX = (x / (box.width / 2)) * 12;
+    const tiltY = -(y / (box.height / 2)) * 12;
+    setTilt({ x: tiltX, y: tiltY });
+  };
+
+  const handleMouseLeave = () => {
+    setTilt({ x: 0, y: 0 });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!formData.name.trim() || !formData.phone.trim()) {
@@ -37,21 +54,78 @@ export default function ConsultingModal({ isOpen, onClose }) {
       return;
     }
 
-    // 전광석화 같은 성공 연출 기동
+    // 전광석화 같은 3D 처방 카드 발행 모드로 전환
     setIsSubmitted(true);
-    setTimeout(() => {
-      setIsSubmitted(false);
-      // 폼 리셋
-      setFormData({
-        name: '',
-        phone: '',
-        mood: 'burnout',
-        scent: [],
-        message: ''
-      });
-      onClose();
-    }, 2800);
   };
+
+  // 처방전 수집 및 닫기
+  const handlePrescriptionClose = () => {
+    setIsSubmitted(false);
+    setFormData({
+      name: '',
+      phone: '',
+      mood: 'burnout',
+      scent: [],
+      message: ''
+    });
+    onClose();
+  };
+
+  // 고민 상태에 따른 동적 처방 매핑 알고리즘
+  const getPrescriptionInfo = () => {
+    const mood = formData.mood;
+    
+    const templates = {
+      burnout: {
+        scentName: 'PALO SANTO',
+        emoji: '🪵',
+        color: '#E5A93B',
+        shadowColor: 'rgba(229, 169, 59, 0.45)',
+        quote: '무기력해진 마음에 신성한 정화의 황금빛 안식을.',
+        desc: '남미 에콰도르의 황야에서 온 정화의 나무 향이, 공간에 켜켜이 쌓인 무거운 무기력을 태우며 포근한 야생 나무의 온기를 촘촘하게 채워 줍니다.',
+        music: 'Ambient Rain Forest & Nature Wave (432Hz)',
+        object: '세라믹 솔리드 오벨리스크 인센스 홀더',
+        badge: ' 정화와 안식 (PURIFY)'
+      },
+      stress: {
+        scentName: 'SMOKED SANDALWOOD',
+        emoji: '🔥',
+        color: '#FF6B35',
+        shadowColor: 'rgba(255, 107, 53, 0.45)',
+        quote: '들끓는 피로와 분노를 차분히 잠재우다.',
+        desc: '자욱한 숲속 깊은 모닥불에서 피어오르는 백단향의 아날로그 오라가, 마찰되어 바짝 긴장된 현대인의 뇌파를 묵직하고 차분하게 소진해 드립니다.',
+        music: 'Muted Hearth Fireplace & Jazz Lo-Fi',
+        object: '네오 브루탈 러프 메탈 틴 캐니스터',
+        badge: ' 이완과 숙성 (RELAX)'
+      },
+      focus: {
+        scentName: 'WHITE SAGE',
+        emoji: '🌿',
+        color: '#65A30D',
+        shadowColor: 'rgba(101, 163, 13, 0.45)',
+        quote: '번잡하게 흩어진 생각을 맑게 비우다.',
+        desc: '하얀 살비아 잎의 싱그러운 약초향이 코끝을 통해 퍼지며, 부유물처럼 둥둥 떠돌아다니는 잡념의 안개를 선명하게 지우고 영감을 일깨워 줍니다.',
+        music: 'Deep Alpha Wave Binaural Focus Sound (528Hz)',
+        object: '콘크리트 모던 미니멀리즘 슬레이트 플레이트',
+        badge: ' 각성과 영감 (CLARITY)'
+      },
+      sleep: {
+        scentName: 'BLACK PATCHOULI',
+        emoji: '🔮',
+        color: '#8B5CF6',
+        shadowColor: 'rgba(139, 92, 246, 0.45)',
+        quote: '이국적이고 포근한 깊은 수면의 바다로.',
+        desc: '동양의 깊은 다크 머스크와 축축한 흙의 패출리가 얽혀드는 신비로운 보랏빛 밤의 기류가, 뒤척이는 당신의 눈가에 평온의 베일을 씌웁니다.',
+        music: 'Cosmic Dream Indigo Healing Soundscape',
+        object: '옵시디언 글래스 리플렉터 코스터 링',
+        badge: ' 평안과 회복 (DEEP DREAM)'
+      }
+    };
+
+    return templates[mood] || templates.burnout;
+  };
+
+  const presc = getPrescriptionInfo();
 
   const moodChips = [
     { value: 'burnout', label: '🪵 무기력 & 번아웃', desc: '칠레 야생의 깊은 안식이 필요할 때' },
@@ -68,33 +142,116 @@ export default function ConsultingModal({ isOpen, onClose }) {
   ];
 
   return (
-    <div className="consulting-overlay" onClick={onClose}>
+    <div className="consulting-overlay" onClick={isSubmitted ? null : onClose}>
       <div 
-        className="consulting-modal jiggle-in" 
+        className={`consulting-modal jiggle-in ${isSubmitted ? 'prescription-mode-active' : ''}`} 
         onClick={(e) => e.stopPropagation()}
+        style={{ 
+          background: isSubmitted ? '#0d0d0c' : 'rgba(247, 244, 237, 0.98)',
+          borderColor: isSubmitted ? presc.color : '#1a1a1a',
+          boxShadow: isSubmitted ? `0px 10px 40px ${presc.shadowColor}, 8px 8px 0px ${presc.color}` : '8px 8px 0px #1a1a1a'
+        }}
       >
         {/* 모달 닫기 */}
-        <button className="consulting-close-btn" onClick={onClose} aria-label="닫기">
+        <button 
+          className="consulting-close-btn" 
+          onClick={isSubmitted ? handlePrescriptionClose : onClose} 
+          aria-label="닫기"
+          style={{ 
+            background: isSubmitted ? '#1a1a19' : '#eae4d9',
+            color: isSubmitted ? '#fff' : '#444',
+            borderColor: isSubmitted ? presc.color : '#1a1a1a'
+          }}
+        >
           <X size={20} />
         </button>
 
         {isSubmitted ? (
-          /* 신청 제출 성공 뷰포트 */
-          <div className="submit-success-view">
-            <div className="success-lottie-ring">
-              <Check size={44} className="check-draw-icon" />
-              <div className="success-lottie-sparks">
-                <Sparkles size={16} className="succ-spark-1" />
-                <Sparkles size={20} className="succ-spark-2" />
+          /* 신청 제출 성공 - 즉석 3D 네온 처방 카드 발급 뷰포트 */
+          <div className="prescription-card-wrap">
+            <span className="prescription-sec-badge font-mono animate-pulse" style={{ color: presc.color }}>
+              <Sparkles size={12} className="spin-slow" /> PERSONALIZED RITUAL PRESCURED
+            </span>
+            
+            <h3 className="presc-user-headline">
+              <span>{formData.name || 'VIP'}</span> 님을 위한 맞춤 향 처방전
+            </h3>
+            
+            {/* 3D 모션 네온 카드 보드 */}
+            <div 
+              className="prescription-3d-neon-card"
+              onMouseMove={handleMouseMove}
+              onMouseLeave={handleMouseLeave}
+              style={{
+                transform: `rotateY(${tilt.x}deg) rotateX(${tilt.y}deg)`,
+                borderColor: presc.color,
+                boxShadow: `0 0 25px ${presc.shadowColor}, inset 0 0 15px ${presc.shadowColor}`
+              }}
+            >
+              {/* 글래스모피즘 반사광 오라 */}
+              <div className="card-glass-specular" />
+              
+              <div className="card-header-presc font-mono">
+                <span>BURN TO CHILL // RITUAL rx</span>
+                <span className="presc-theme-badge" style={{ backgroundColor: presc.color }}>
+                  {presc.badge}
+                </span>
+              </div>
+              
+              <div className="presc-main-avatar">
+                <span className="presc-emoji">{presc.emoji}</span>
+                <h4 className="presc-scent-name" style={{ color: presc.color }}>{presc.scentName}</h4>
+              </div>
+              
+              <p className="presc-quote font-serif">" {presc.quote} "</p>
+              
+              <div className="presc-dashed-divider" />
+              
+              <p className="presc-detail-description">
+                {presc.desc}
+              </p>
+              
+              <div className="presc-dashed-divider" />
+              
+              {/* 세부 처방 요소 */}
+              <div className="presc-factors-grid font-mono">
+                <div className="factor-row">
+                  <div className="factor-lbl">
+                    <Volume2 size={12} style={{ color: presc.color }} />
+                    <span>ACOUSTIC rx (추천 주파수)</span>
+                  </div>
+                  <span className="factor-val">{presc.music}</span>
+                </div>
+                
+                <div className="factor-row">
+                  <div className="factor-lbl">
+                    <Package size={12} style={{ color: presc.color }} />
+                    <span>OBJECT rx (추천 오브제)</span>
+                  </div>
+                  <span className="factor-val">{presc.object}</span>
+                </div>
+              </div>
+              
+              {/* 스탬프 장식 */}
+              <div className="presc-stamp-seal font-mono" style={{ color: presc.color, borderColor: presc.color }}>
+                <span>APPROVED</span>
+                <strong>BTC MASTER</strong>
               </div>
             </div>
-            <h3 className="success-title font-mono">CONSULTING SUBMITTED</h3>
-            <h4>리추얼 향 컨설팅 신청이 완료되었습니다!</h4>
-            <p>
-              입력하신 고민과 선호에 맞춰,<br />
-              번투칠 전문 마스터가 <strong>24시간 이내</strong>에 나만의 향 조합 처방전을 안내해 드릴 예정입니다.
-            </p>
-            <span className="success-sub font-mono">잠시 후 창이 닫힙니다.</span>
+
+            <p className="presc-card-hint font-mono">💡 마우스를 올려 카드를 이리저리 기울여 보세요.</p>
+
+            {/* 카드 하단 액션 버튼 */}
+            <div className="prescription-actions">
+              <button 
+                className="presc-action-btn presc-btn-save"
+                onClick={handlePrescriptionClose}
+                style={{ borderColor: presc.color, color: '#fff' }}
+              >
+                <Download size={14} />
+                <span>처방전 보관고에 저장하고 닫기</span>
+              </button>
+            </div>
           </div>
         ) : (
           /* 실제 입력 신청 양식 */

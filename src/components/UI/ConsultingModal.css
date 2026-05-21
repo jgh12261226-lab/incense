@@ -576,3 +576,264 @@
     justify-content: center;
   }
 }
+
+/* ==========================================================================
+   11. 즉석 3D 네온 처방전 카드 스타일시트 (Neo-Neon Glassmorphism)
+   ========================================================================== */
+.prescription-mode-active {
+  transition: background 0.8s ease, border-color 0.8s ease, box-shadow 0.8s ease;
+  perspective: 1000px; /* 3D 공간 왜곡 축 추가 */
+  max-width: 600px !important;
+}
+
+.prescription-card-wrap {
+  padding: 40px 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  color: #fff;
+  animation: fadeInRx 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInRx {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.prescription-sec-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  padding: 4px 12px;
+  border-radius: 20px;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.presc-user-headline {
+  font-size: 1.35rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  margin: 0;
+  color: #f7f4ed;
+}
+
+.presc-user-headline span {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  color: #fff;
+}
+
+/* 3D 네온 유리 처방 카드 */
+.prescription-3d-neon-card {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  background: linear-gradient(135deg, rgba(25, 24, 23, 0.9) 0%, rgba(15, 14, 13, 0.95) 100%);
+  border: 2px solid;
+  border-radius: 24px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transform-style: preserve-3d; /* 자식 요소들에 3D 깊이 전파 */
+  transition: transform 0.1s ease, border-color 0.8s ease, box-shadow 0.8s ease;
+  cursor: grab;
+}
+
+.prescription-3d-neon-card:active {
+  cursor: grabbing;
+}
+
+/* 글래스모피즘 SPECULAR (반사광 효과) */
+.card-glass-specular {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 22px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 0.02) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+.card-header-presc {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  color: rgba(255, 255, 255, 0.4);
+  transform: translateZ(20px); /* 3D 돌출 효과 */
+}
+
+.presc-theme-badge {
+  color: #000;
+  font-weight: 900;
+  font-size: 0.62rem;
+  padding: 2px 8px;
+  border-radius: 6px;
+  letter-spacing: 0.05em;
+}
+
+.presc-main-avatar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  transform: translateZ(35px); /* 더 튀어나오게 연출 */
+}
+
+.presc-emoji {
+  font-size: 2.8rem;
+  filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5));
+}
+
+.presc-scent-name {
+  font-family: var(--font-goblin);
+  font-size: 1.45rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  margin: 0;
+}
+
+.presc-quote {
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: #eae4d9;
+  font-style: italic;
+  margin: 4px 0;
+  opacity: 0.95;
+  transform: translateZ(25px);
+}
+
+.presc-dashed-divider {
+  border-top: 1px dashed rgba(255, 255, 255, 0.12);
+  margin: 4px 0;
+  transform: translateZ(10px);
+}
+
+.presc-detail-description {
+  font-size: 0.8rem;
+  line-height: 1.55;
+  color: rgba(234, 228, 217, 0.7);
+  text-align: left;
+  margin: 0;
+  transform: translateZ(15px);
+}
+
+.presc-factors-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+  transform: translateZ(20px);
+}
+
+.factor-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+  background-color: rgba(255,255,255,0.02);
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.04);
+}
+
+.factor-lbl {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.factor-val {
+  font-weight: 700;
+  color: #eae4d9;
+}
+
+/* 아날로그 도장 효과 (Approved Seal) */
+.presc-stamp-seal {
+  position: absolute;
+  bottom: 85px;
+  right: 25px;
+  width: 72px;
+  height: 72px;
+  border: 2px solid;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.48rem;
+  letter-spacing: 0.05em;
+  font-weight: 800;
+  transform: rotate(-15deg) translateZ(40px); /* 3D로 가장 위에 돌출 */
+  opacity: 0.85;
+  background-color: rgba(13, 13, 12, 0.8);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+  pointer-events: none;
+}
+
+.presc-stamp-seal span {
+  font-weight: 400;
+  opacity: 0.6;
+}
+
+.presc-stamp-seal strong {
+  font-size: 0.52rem;
+  margin-top: 1px;
+}
+
+.presc-card-hint {
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.35);
+  margin: 5px 0 0 0;
+  letter-spacing: 0.05em;
+}
+
+/* 하단 액션 */
+.prescription-actions {
+  width: 100%;
+  max-width: 440px;
+  margin-top: 10px;
+}
+
+.presc-action-btn {
+  width: 100%;
+  height: 50px;
+  border-radius: 25px;
+  font-family: inherit;
+  font-weight: 800;
+  font-size: 0.88rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 4px 4px 0 #000;
+}
+
+.presc-btn-save {
+  background-color: #1a1a19;
+  border: 2px solid;
+}
+
+.presc-action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0 #000;
+  filter: brightness(1.15);
+}
+
+.presc-action-btn:active {
+  transform: translateY(1px);
+  box-shadow: 2px 2px 0 #000;
+}
+

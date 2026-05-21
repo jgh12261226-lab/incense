@@ -290,6 +290,7 @@ export default function ScentSection({ isIgnited, onIgnite }) {
                   className={`scent-chip-card-btn ${isActive ? 'active-chip' : ''}`}
                   style={{ '--accent-color': note.color, '--delay': `${index * 0.15}s` }}
                   onClick={() => handlePageChange(pageIdx)}
+                  data-scent-color={note.color}
                   aria-label={`${note.name} ${note.scent} 3D 페이지로 책장 넘기기`}
                 >
                   <div className="scent-chip-balloon">

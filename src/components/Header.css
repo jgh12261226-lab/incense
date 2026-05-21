@@ -482,3 +482,44 @@
     width: 200px;
   }
 }
+
+/* 신규: 로그인 유저 프로필 헤더 스타일 */
+.header-user-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-vip-badge {
+  background-color: #d4af37; /* 황동 골드 */
+  color: #161512;
+  font-size: 0.65rem;
+  font-weight: 900;
+  padding: 3px 7px;
+  border-radius: 6px;
+  box-shadow: 1.5px 1.5px 0px var(--color-primary);
+  border: 1px solid var(--color-primary);
+  letter-spacing: 0.05em;
+}
+
+.user-welcome-text {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+  color: var(--color-primary);
+  cursor: pointer;
+  position: relative;
+  transition: color 0.2s, transform 0.2s;
+  padding: 4px 6px;
+  border-radius: 6px;
+  background-color: rgba(234, 228, 217, 0.04);
+  border: 1px dashed rgba(234, 228, 217, 0.15);
+}
+
+.user-welcome-text:hover {
+  color: var(--color-accent);
+  transform: translateY(-1px);
+  background-color: rgba(255, 107, 53, 0.08);
+  border-color: var(--color-accent);
+}

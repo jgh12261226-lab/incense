@@ -18,11 +18,12 @@
   position: fixed;
   width: 90px;
   height: 90px;
-  background: radial-gradient(circle, rgba(255, 107, 53, 0.32) 0%, rgba(255, 107, 53, 0.05) 50%, rgba(0, 0, 0, 0) 80%);
+  background: radial-gradient(circle, var(--hovered-color, #ff6b35) 0%, rgba(var(--hovered-color), 0.1) 40%, rgba(0, 0, 0, 0) 80%);
   border-radius: 50%;
   transform: translate(-50%, -50%);
   pointer-events: none;
   mix-blend-mode: screen;
+  transition: background 0.4s ease, width 0.3s, height 0.3s;
 }
 
 /* 2. 타오르는 리얼 화염 코어 (끝이 뾰족한 불꽃 쉐입) */
@@ -30,13 +31,13 @@
   position: fixed;
   width: 18px;
   height: 28px;
-  background: linear-gradient(to top, #ff3300, #ff6600, #ffcc00);
+  background: linear-gradient(to top, rgba(0,0,0,0.3), var(--hovered-color, #ff6b35), #fff);
   border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
   transform: translate(-50%, -80%) rotate(-45deg);
   pointer-events: none;
-  box-shadow: 0 -4px 10px rgba(255, 60, 0, 0.8), 0 -8px 20px rgba(255, 120, 0, 0.6);
+  box-shadow: 0 -4px 12px var(--hovered-color, #ff6b35), 0 -8px 24px var(--hovered-color, #ff6b35);
   transform-origin: bottom center;
-  transition: transform 0.15s var(--ease-elastic);
+  transition: transform 0.15s var(--ease-elastic), background 0.4s ease, box-shadow 0.4s ease, width 0.25s, height 0.25s;
 }
 
 /* 물방울 뒤집어서 뾰족한 화염 쉐입을 만드는 수학적 CSS 트릭 */
@@ -82,12 +83,14 @@
   position: fixed;
   width: 12px;
   height: 18px;
-  background-color: rgba(255, 107, 53, 0.45);
+  background-color: var(--hovered-color, #ff6b35);
+  opacity: 0.55;
   border-radius: 50% 50% 0 50% / 50% 50% 0 50%;
   transform: translate(-50%, -70%) rotate(45deg);
   pointer-events: none;
   filter: blur(1px);
   mix-blend-mode: screen;
+  transition: background-color 0.4s ease;
 }
 
 /* 6. 회백색 흐르는 연기 잔상 */
@@ -146,4 +149,39 @@
   filter: blur(2.5px);
   mix-blend-mode: screen;
   will-change: transform, opacity, left, top;
+}
+
+/* =========================================
+   인터랙티브 호버 및 파이어 버스팅 팽창 연출
+   ========================================= */
+
+/* 일반 호버 상태: 불꽃이 1.4배 커짐 */
+.cursor-hovered .cursor-fire-core {
+  width: 22px;
+  height: 35px;
+  box-shadow: 
+    0 -5px 15px var(--hovered-color), 
+    0 -10px 30px var(--hovered-color);
+}
+
+.cursor-hovered .cursor-flame-glow {
+  width: 140px;
+  height: 140px;
+}
+
+/* 진입 순간 버스팅(350ms): 화락 타오름 */
+.cursor-bursting .cursor-fire-core {
+  width: 34px;
+  height: 50px;
+  box-shadow: 
+    0 -8px 25px var(--hovered-color), 
+    0 -16px 45px var(--hovered-color);
+  transform: translate(-50%, -85%) rotate(45deg) scale(1.2);
+  transition: width 0.1s cubic-bezier(0.175, 0.885, 0.45, 1.5), 
+              height 0.1s cubic-bezier(0.175, 0.885, 0.45, 1.5);
+}
+
+.cursor-bursting .cursor-flame-glow {
+  width: 190px;
+  height: 190px;
 }

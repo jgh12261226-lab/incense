@@ -58,6 +58,16 @@ export default function EpilogueSection({ isIgnited, onIgnite }) {
     };
   }, [onIgnite]);
 
+  useEffect(() => {
+    const handleOpenEvent = () => {
+      setIsConsultingOpen(true);
+    };
+    window.addEventListener('open-consulting', handleOpenEvent);
+    return () => {
+      window.removeEventListener('open-consulting', handleOpenEvent);
+    };
+  }, []);
+
   const handleCtaClick = () => {
     setIsConsultingOpen(true);
   };

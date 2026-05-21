@@ -27,6 +27,10 @@ export default function App() {
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
 
+  // 로그인 상태 및 유저 프로필 관리
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userProfile, setUserProfile] = useState(null);
+
   // 히어로 섹션과 구매유도 섹션 간의 인센스 캔 동기화 상태
   const [selectedPurchaseCan, setSelectedPurchaseCan] = useState(0);
   
@@ -41,16 +45,50 @@ export default function App() {
     { name: 'BLACK PATCHOULI', icon: '🔮', color: '#8B5CF6', desc: '밤새 이국적으로 번지는 다크 머스크 향' }
   ];
 
+  // 장바구니 아이템 추가 (중복 상품 수량 통합 적용)
   const addToCart = (item) => {
-    const newItem = {
-      ...item,
-      cartId: Date.now() // 고유 cartId 부여로 개별 삭제 대응
-    };
-    setCartItems(prev => [...prev, newItem]);
+    setCartItems(prev => {
+      const existingIdx = prev.findIndex(prevItem => 
+        prevItem.option === item.option && prevItem.canName === item.canName
+      );
+      if (existingIdx > -1) {
+        const updated = [...prev];
+        updated[existingIdx].quantity += (item.quantity || 1);
+        return updated;
+      } else {
+        return [...prev, { ...item, cartId: Date.now(), quantity: item.quantity || 1 }];
+      }
+    });
+  };
+
+  // 장바구니 아이템 수량 조절 핸들러 (1 미만으로 내려가지 않도록 잠금)
+  const updateCartQuantity = (cartId, delta) => {
+    setCartItems(prev => prev.map(item => {
+      if (item.cartId === cartId) {
+        const newQty = item.quantity + delta;
+        return { ...item, quantity: Math.max(1, newQty) };
+      }
+      return item;
+    }));
   };
 
   const removeFromCart = (cartId) => {
     setCartItems(prev => prev.filter(item => item.cartId !== cartId));
+  };
+
+  const clearCart = () => {
+    setCartItems([]);
+  };
+
+  // 로그인 및 로그아웃 완료 핸들러
+  const handleLoginSuccess = (profile) => {
+    setIsLoggedIn(true);
+    setUserProfile(profile);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    setUserProfile(null);
   };
 
   // 히어로 섹션에서 바로구매를 눌렀을 때의 연동 핸들러
@@ -168,9 +206,12 @@ export default function App() {
 
       {/* 4. 상단 고정 네비게이션 헤더 */}
       <Header 
-        cartCount={cartItems.length} 
+        cartCount={cartItems.reduce((acc, item) => acc + item.quantity, 0)} 
         onCartOpen={() => setIsCartOpen(true)} 
         onLoginOpen={() => setIsLoginOpen(true)} 
+        isLoggedIn={isLoggedIn}
+        userProfile={userProfile}
+        onLogout={handleLogout}
       />
 
       {/* 5. 섹션들 순차 레이아웃 */}
@@ -230,6 +271,7 @@ export default function App() {
       <LoginOverlay 
         isOpen={isLoginOpen} 
         onClose={() => setIsLoginOpen(false)} 
+        onLoginSuccess={handleLoginSuccess}
       />
 
       {/* 7. 우측 슬라이드인 장바구니 드로어 */}
@@ -238,6 +280,8 @@ export default function App() {
         onClose={() => setIsCartOpen(false)} 
         cartItems={cartItems} 
         onRemoveItem={removeFromCart} 
+        onUpdateQuantity={updateCartQuantity}
+        onClearCart={clearCart}
       />
 
       {/* 8. 몽환적 커스텀 장바구니 담기 확인 모달 */}

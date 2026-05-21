@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Flame, Zap, ShoppingBag, Menu, X, Layers, Package, Feather, Eye, BookOpen, MessageCircle } from 'lucide-react';
 import './Header.css';
 
-export default function Header({ cartCount = 0, onCartOpen, onLoginOpen }) {
+export default function Header({ cartCount = 0, onCartOpen, onLoginOpen, isLoggedIn, userProfile, onLogout }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
   const [isBadgeBouncing, setIsBadgeBouncing] = useState(false);
@@ -110,10 +110,19 @@ export default function Header({ cartCount = 0, onCartOpen, onLoginOpen }) {
         <div className="header-actions">
           <button
             className="custom-order-btn"
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
               const element = document.getElementById('epilogue');
               if (element) {
-                element.scrollIntoView({ behavior: 'smooth' });
+                const headerOffset = 70;
+                const elementPosition = element.getBoundingClientRect().top;
+                const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+                window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                
+                // 스크롤이 완료되는 시점에 컨설팅 모달 자동 실행 전역 이벤트 발행
+                setTimeout(() => {
+                  window.dispatchEvent(new CustomEvent('open-consulting'));
+                }, 850);
               }
             }}
           >
@@ -124,15 +133,24 @@ export default function Header({ cartCount = 0, onCartOpen, onLoginOpen }) {
 
       {/* 우측 퀵 액션 영역 (로그인 + 장바구니 + 메뉴) */}
       <div className="header-right-quick-actions">
-        {/* 로그인 탭 */}
-        <button
-          className="header-login-btn"
-          onClick={onLoginOpen}
-          aria-label="Open Login"
-        >
-          LOGIN
-          <span className="login-btn-underline" />
-        </button>
+        {/* 로그인 탭 및 로그아웃 유기적 분기 */}
+        {isLoggedIn ? (
+          <div className="header-user-status">
+            <span className="user-vip-badge font-mono animate-pulse">RITUAL VIP</span>
+            <span className="user-welcome-text font-mono" onClick={onLogout} title="클릭하여 로그아웃">
+              {userProfile?.name || 'GUEST'}
+            </span>
+          </div>
+        ) : (
+          <button
+            className="header-login-btn"
+            onClick={onLoginOpen}
+            aria-label="Open Login"
+          >
+            LOGIN
+            <span className="login-btn-underline" />
+          </button>
+        )}
 
         {/* 장바구니 버튼 */}
         <button
@@ -183,19 +201,35 @@ export default function Header({ cartCount = 0, onCartOpen, onLoginOpen }) {
                   </button>
                 ))}
 
-                <button
-                  className="menu-dropdown-item menu-item-divider"
-                  onClick={() => {
-                    onLoginOpen?.();
-                    setIsMenuOpen(false);
-                  }}
-                >
-                  <span className="menu-item-icon"><MessageCircle size={14} /></span>
-                  <span>
-                    <span style={{ display: 'block', fontSize: '0.88rem' }}>LOGIN</span>
-                    <span style={{ display: 'block', fontSize: '0.68rem', opacity: 0.5, marginTop: '1px' }}>계정 로그인</span>
-                  </span>
-                </button>
+                {isLoggedIn ? (
+                  <button
+                    className="menu-dropdown-item menu-item-divider"
+                    onClick={() => {
+                      onLogout?.();
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    <span className="menu-item-icon"><X size={14} /></span>
+                    <span>
+                      <span style={{ display: 'block', fontSize: '0.88rem' }}>LOGOUT</span>
+                      <span style={{ display: 'block', fontSize: '0.68rem', opacity: 0.5, marginTop: '1px' }}>세션 로그아웃</span>
+                    </span>
+                  </button>
+                ) : (
+                  <button
+                    className="menu-dropdown-item menu-item-divider"
+                    onClick={() => {
+                      onLoginOpen?.();
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    <span className="menu-item-icon"><MessageCircle size={14} /></span>
+                    <span>
+                      <span style={{ display: 'block', fontSize: '0.88rem' }}>LOGIN</span>
+                      <span style={{ display: 'block', fontSize: '0.68rem', opacity: 0.5, marginTop: '1px' }}>계정 로그인</span>
+                    </span>
+                  </button>
+                )}
               </div>
             </>
           )}

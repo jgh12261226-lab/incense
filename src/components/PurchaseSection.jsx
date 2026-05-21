@@ -54,7 +54,30 @@ export default function PurchaseSection({ isIgnited, onIgnite, addToCart, select
       });
     }, 4000);
     return () => clearInterval(timer);
-  }, [pulseCount]);
+  const handleCardMouseMove = (e) => {
+    const card = e.currentTarget;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const xPercent = (x / rect.width) * 100;
+    const yPercent = (y / rect.height) * 100;
+    
+    card.style.setProperty('--mx', `${xPercent}%`);
+    card.style.setProperty('--my', `${yPercent}%`);
+    
+    const xTilt = ((x / rect.width) - 0.5) * 10;
+    const yTilt = ((y / rect.height) - 0.5) * -10;
+    card.style.setProperty('--card-tilt-x', `${yTilt}deg`);
+    card.style.setProperty('--card-tilt-y', `${xTilt}deg`);
+  };
+
+  const handleCardMouseLeave = (e) => {
+    const card = e.currentTarget;
+    card.style.setProperty('--mx', `50%`);
+    card.style.setProperty('--my', `50%`);
+    card.style.setProperty('--card-tilt-x', `0deg`);
+    card.style.setProperty('--card-tilt-y', `0deg`);
+  };
 
   const incenseCans = [
     {
@@ -142,6 +165,8 @@ export default function PurchaseSection({ isIgnited, onIgnite, addToCart, select
             <div 
               className={`promo-option-card ${selectedOption === 'stick' ? 'active-option' : ''}`}
               onClick={() => setSelectedOption('stick')}
+              onMouseMove={handleCardMouseMove}
+              onMouseLeave={handleCardMouseLeave}
             >
               <div className="option-checkbox">
                 {selectedOption === 'stick' && <Check size={14} className="check-icon" />}
@@ -160,6 +185,8 @@ export default function PurchaseSection({ isIgnited, onIgnite, addToCart, select
             <div 
               className={`promo-option-card ${selectedOption === 'can' ? 'active-option' : ''}`}
               onClick={() => setSelectedOption('can')}
+              onMouseMove={handleCardMouseMove}
+              onMouseLeave={handleCardMouseLeave}
             >
               <div className="option-checkbox">
                 {selectedOption === 'can' && <Check size={14} className="check-icon" />}
@@ -178,6 +205,8 @@ export default function PurchaseSection({ isIgnited, onIgnite, addToCart, select
             <div 
               className={`promo-option-card bundle-promo-card ${selectedOption === 'bundle' ? 'active-option' : ''}`}
               onClick={() => setSelectedOption('bundle')}
+              onMouseMove={handleCardMouseMove}
+              onMouseLeave={handleCardMouseLeave}
             >
               <div className="bundle-fire-ribbon">35% BUNDLE OFF</div>
               <div className="option-checkbox">
@@ -215,6 +244,9 @@ export default function PurchaseSection({ isIgnited, onIgnite, addToCart, select
                         key={idx}
                         className={`picker-can-item ${selectedCan === idx ? 'can-picked' : ''}`}
                         onClick={() => setSelectedCan(idx)}
+                        onMouseMove={handleCardMouseMove}
+                        onMouseLeave={handleCardMouseLeave}
+                        data-scent-color={can.color}
                         style={{ '--can-color': can.color }}
                       >
                         <div className="picker-can-icon-wrap">

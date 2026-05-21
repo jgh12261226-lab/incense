@@ -9,11 +9,14 @@ export default function CustomCursor() {
   const [clicked, setClicked] = useState(false);
   const [flameWobble, setFlameWobble] = useState(0);
   const [particles, setParticles] = useState([]); // 실시간 연기 입자들
+  const [hoveredColor, setHoveredColor] = useState(null);
+  const [isHovered, setIsHovered] = useState(false);
+  const [isBursting, setIsBursting] = useState(false);
 
   const requestRef = useRef();
   const particleIdRef = useRef(0);
   
-  // 마우스 위치 및 이벤트 헨들러
+  // 마우스 위치, 다운/업 및 전역 호버 위임 리스너 통합
   useEffect(() => {
     const handleMouseMove = (e) => {
       setPosition({ x: e.clientX, y: e.clientY });
@@ -32,19 +35,46 @@ export default function CustomCursor() {
       setClicked(false);
     };
 
+    const handleMouseOver = (e) => {
+      const target = e.target.closest('[data-scent-color]');
+      const isInteractive = e.target.closest('button, a, .picker-can-item, .vault-item-tin, .scent-chip-card-btn, .option-checkbox');
+      
+      if (target) {
+        const color = target.getAttribute('data-scent-color');
+        setHoveredColor(color);
+      } else if (isInteractive) {
+        // 일반 인터랙티브 요소는 기본 네온 오렌지색 적용
+        setHoveredColor('#FF6B35');
+      } else {
+        setHoveredColor(null);
+      }
+
+      if (isInteractive) {
+        if (!isHovered) {
+          setIsHovered(true);
+          setIsBursting(true);
+          setTimeout(() => setIsBursting(false), 350);
+        }
+      } else {
+        setIsHovered(false);
+      }
+    };
+
     window.addEventListener('mousemove', handleMouseMove, { passive: true });
     document.addEventListener('mouseleave', handleMouseLeave, { passive: true });
     window.addEventListener('mousedown', handleMouseDown, { passive: true });
     window.addEventListener('mouseup', handleMouseUp, { passive: true });
+    window.addEventListener('mouseover', handleMouseOver, { passive: true });
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('mouseleave', handleMouseLeave);
       window.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('mouseover', handleMouseOver);
       cancelAnimationFrame(requestRef.current);
     };
-  }, []);
+  }, [isHovered]);
 
   // 불꽃 일렁임(wobble) 모션 제어
   useEffect(() => {
@@ -137,7 +167,10 @@ export default function CustomCursor() {
     <div
       className={`custom-cursor-container ${hidden ? 'cursor-hidden' : ''} ${
         clicked ? 'cursor-clicked' : ''
-      }`}
+      } ${isHovered ? 'cursor-hovered' : ''} ${isBursting ? 'cursor-bursting' : ''}`}
+      style={{
+        '--hovered-color': hoveredColor || '#FF6B35'
+      }}
     >
       {/* 몽글몽글 솟아오르는 다이내믹 연기 파티클들 */}
       {particles.map((p) => (

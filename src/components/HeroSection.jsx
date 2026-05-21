@@ -9,11 +9,13 @@ export default function HeroSection({ scrollProgress, isIgnited, onIgnite, onHer
   const [selectedItem, setSelectedItem] = useState(null);
   const [isStickInserted, setIsStickInserted] = useState(false);
   const [isStickBurning, setIsStickBurning] = useState(false);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
 
   // 연속 클릭 시 타이머가 중첩되어 모션이 뒤틀리는 비동기 레이스 컨디션을 방지하기 위한 레퍼런스
   const insertTimerRef = useRef(null);
   const burnTimerRef = useRef(null);
   const sectionRef = useRef(null);
+  const cabinetRef = useRef(null);
 
   const clearTimers = () => {
     if (insertTimerRef.current) clearTimeout(insertTimerRef.current);
@@ -64,6 +66,24 @@ export default function HeroSection({ scrollProgress, isIgnited, onIgnite, onHer
     }
     return () => clearTimers(); // 언마운트 시 타이머 클린업
   }, [isVaultOpen]);
+
+  const handleMouseMove = (e) => {
+    if (!cabinetRef.current) return;
+    const rect = cabinetRef.current.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    
+    // -0.5 ~ 0.5 범위로 마우스 비율 계산
+    const xPercent = (x / rect.width) - 0.5;
+    const yPercent = (y / rect.height) - 0.5;
+    
+    setTilt({ x: xPercent, y: yPercent });
+  };
+
+  const handleCabinetMouseLeave = () => {
+    setTilt({ x: 0, y: 0 });
+    setIsVaultOpen(false);
+  };
 
   const handleTinClick = (idx) => {
     // 새로 캔을 클릭하면 기존 가동 중인 비동기 타이머를 즉시 취소하여 충돌 방지
@@ -128,6 +148,29 @@ export default function HeroSection({ scrollProgress, isIgnited, onIgnite, onHer
       {/* 가려져 있던 검은 안개막 (불이 붙어야 걷힘) */}
       <div className={`section-dark-veil ${isIgnited ? 'ignited' : ''}`} />
 
+      {/* 신규: 캔 선택 시 룸 전체를 물들이는 동적 앰비언트 글로우 백라이트 (쿼드 앰비언트) */}
+      <div 
+        className="hero-theme-glow glow-bottom-right" 
+        style={{ 
+          color: selectedItem !== null ? incenseItems[selectedItem].color : 'rgba(255, 107, 53, 0.5)',
+          opacity: selectedItem !== null ? 0.35 : 0.08
+        }}
+      />
+      <div 
+        className="hero-theme-glow glow-top-right" 
+        style={{ 
+          color: selectedItem !== null ? incenseItems[selectedItem].color : 'rgba(255, 107, 53, 0.5)',
+          opacity: selectedItem !== null ? 0.25 : 0.05
+        }}
+      />
+      <div 
+        className="hero-theme-glow glow-middle-left" 
+        style={{ 
+          color: selectedItem !== null ? incenseItems[selectedItem].color : 'rgba(255, 107, 53, 0.5)',
+          opacity: selectedItem !== null ? 0.3 : 0.06
+        }}
+      />
+
       <div className="hero-grid-bg"></div>
 
       <div className="hero-content">
@@ -158,17 +201,24 @@ export default function HeroSection({ scrollProgress, isIgnited, onIgnite, onHer
 
         {/* 3D 양문형 펼침 게이트와 보관고 조립체 (호버 기반 개폐) */}
         <div 
+          ref={cabinetRef}
           className={`vault-cabinet-container ${isVaultOpen ? 'vault-open' : ''} flat-frame`}
-          style={{ '--hero-img': `url(${heroWitchImg})` }}
+          style={{ 
+            '--hero-img': `url(${heroWitchImg})`,
+            '--selected-glow-color': selectedItem !== null ? incenseItems[selectedItem].color : '',
+            '--tilt-x': `${tilt.y * -14}deg`,
+            '--tilt-y': `${tilt.x * 14}deg`,
+            '--tilt-px-x': `${tilt.x * -16}px`,
+            '--tilt-px-y': `${tilt.y * -16}px`
+          }}
+          onMouseMove={handleMouseMove}
           onMouseEnter={() => {
             setIsVaultOpen(true);
             if (!isIgnited && onIgnite) {
               onIgnite();
             }
           }}
-          onMouseLeave={() => {
-            setIsVaultOpen(false);
-          }}
+          onMouseLeave={handleCabinetMouseLeave}
         >
           
           {/* 1. 내부 인센스 보관함 Grid (문이 펼쳐져야 드러남) */}
@@ -188,6 +238,7 @@ export default function HeroSection({ scrollProgress, isIgnited, onIgnite, onHer
                     e.stopPropagation();
                     handleTinClick(idx);
                   }}
+                  data-scent-color={item.color}
                   style={{ 
                     '--tin-color': item.color, 
                     '--item-idx': idx 
