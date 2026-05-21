@@ -371,9 +371,71 @@ export default function EpilogueSection({ isIgnited, onIgnite }) {
           <CustomCTA text="1:1 맞춤 리추얼 향 컨설팅 신청" onClick={handleCtaClick} />
         </div>
 
-        {/* 하단 풋터 */}
+        {/* 하단 풋터 - 힙한 다단 브루탈리즘 상세 정보 섹션 */}
         <footer className="epilogue-footer">
-          <p>© 2026 BURN TO CHILL LAB. ALL RIGHTS RESERVED.</p>
+          <div className="footer-grid">
+            
+            {/* Column 1: 브랜드 소개 및 보증 */}
+            <div className="footer-col brand-col">
+              <h3 className="footer-brand-title font-mono">BURN TO CHILL</h3>
+              <p className="footer-brand-desc">
+                단 하나의 특별한 연기로 완성하는 공간의 품격. 
+                번투칠 랩은 전통적인 훈연 아날로그 기법과 현대적인 감각을 결합하여 영혼의 휴식을 처방합니다.
+              </p>
+              <div className="footer-badge-box">
+                <span className="footer-cert-badge">100% HANDMADE INCENSE</span>
+                <span className="footer-cert-badge font-gold">SECURE VAULT CERTIFIED</span>
+              </div>
+            </div>
+
+            {/* Column 2: 회사 정보 (Company Info) */}
+            <div className="footer-col info-col">
+              <h4 className="footer-col-title font-mono">COMPANY INFO</h4>
+              <ul className="footer-info-list">
+                <li><span>상호명</span> (주)번투칠 랩</li>
+                <li><span>대표이사 / 보호책임자</span> 장건희</li>
+                <li><span>사업자등록번호</span> 220-88-12345</li>
+                <li><span>통신판매업신고</span> 제 2026-서울강남-0419호</li>
+                <li><span>본사 주소</span> 서울특별시 강남구 테헤란로 419, 캔틀타워 8층</li>
+              </ul>
+            </div>
+
+            {/* Column 3: 고객 센터 & 문의 (Support & Contact) */}
+            <div className="footer-col contact-col">
+              <h4 className="footer-col-title font-mono">CUSTOMER CENTER</h4>
+              <p className="footer-phone">1644-0419</p>
+              <ul className="footer-info-list">
+                <li><span>운영 시간</span> 평일 10:00 - 17:00 (토/일, 공휴일 휴무)</li>
+                <li><span>점심 시간</span> 12:00 - 13:00</li>
+                <li><span>고객 지원</span> <a href="mailto:support@burntochill.lab">support@burntochill.lab</a></li>
+                <li><span>비즈니스 제휴</span> <a href="mailto:partnership@burntochill.lab">partnership@burntochill.lab</a></li>
+              </ul>
+            </div>
+
+            {/* Column 4: 소셜 및 리서치 링크 (Social Channels) */}
+            <div className="footer-col social-col">
+              <h4 className="footer-col-title font-mono">CONNECT</h4>
+              <div className="footer-social-links">
+                <a href="#instagram" className="social-link-item">INSTAGRAM</a>
+                <a href="#kakaotalk" className="social-link-item">KAKAOTALK</a>
+                <a href="#youtube" className="social-link-item">YOUTUBE</a>
+              </div>
+              <p className="footer-escrow-notice">
+                * 고객님의 안전거래를 위해 현금 결제 시 우체국 안심 특송 100% 에스크로 구매안전 서비스를 이용하실 수 있습니다.
+              </p>
+            </div>
+
+          </div>
+
+          {/* 하단 저작권 라인 */}
+          <div className="footer-bottom-row">
+            <p className="footer-copyright">© 2026 BURN TO CHILL LAB. ALL RIGHTS RESERVED.</p>
+            <div className="footer-bottom-links">
+              <a href="#terms">이용약관</a>
+              <span className="divider">|</span>
+              <a href="#privacy" className="privacy-bold">개인정보처리방침</a>
+            </div>
+          </div>
         </footer>
 
         {/* 1:1 맞춤 리추얼 향 컨설팅 신청서 팝업 모달 */}

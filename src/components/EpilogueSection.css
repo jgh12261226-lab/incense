@@ -265,21 +265,214 @@
   pointer-events: auto;
 }
 
-/* 3. 풋터 */
+/* =========================================
+   3. 힙 브루탈리즘 상세 다단 풋터 스타일
+   ========================================= */
 .epilogue-footer {
   width: 100%;
   border-top: 2px dashed rgba(234, 228, 217, 0.15);
-  padding-top: 30px;
-  opacity: 0.5;
+  padding-top: 50px;
+  margin-top: 40px;
+  text-align: left;
 }
 
-.epilogue-footer p {
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 50px;
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* 브랜드 칼럼 */
+.footer-brand-title {
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--color-primary);
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.footer-brand-desc {
   font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--color-primary);
+  opacity: 0.6;
+  word-break: keep-all;
+}
+
+.footer-badge-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.footer-cert-badge {
+  font-family: var(--font-goblin);
+  font-size: 0.55rem;
+  font-weight: 800;
+  background-color: rgba(234, 228, 217, 0.08);
+  color: var(--color-primary);
+  border: 1px solid rgba(234, 228, 217, 0.15);
+  padding: 4px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.02em;
+}
+
+.footer-cert-badge.font-gold {
+  border-color: #d4af37;
+  color: #d4af37;
+  background-color: rgba(212, 175, 55, 0.05);
+}
+
+/* 칼럼 헤더 */
+.footer-col-title {
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  opacity: 0.4;
+  letter-spacing: 0.08em;
+  margin: 0;
+  border-bottom: 1px dashed rgba(234, 228, 217, 0.1);
+  padding-bottom: 8px;
+}
+
+/* 정보 리스트 */
+.footer-info-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.footer-info-list li {
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--color-primary);
+  opacity: 0.75;
+}
+
+.footer-info-list li span {
+  display: inline-block;
+  min-width: 80px;
+  opacity: 0.5;
+  font-weight: 700;
+}
+
+.footer-info-list li a {
+  color: var(--color-accent);
+  text-decoration: none;
+  font-weight: 800;
+  transition: opacity 0.2s;
+}
+
+.footer-info-list li a:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+/* 고객센터 폰트 및 소셜 */
+.footer-phone {
+  font-family: var(--font-goblin);
+  font-size: 1.6rem;
+  font-weight: 900;
+  color: var(--color-accent);
+  margin: 0 0 5px 0;
+}
+
+.footer-social-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.social-link-item {
+  font-family: var(--font-goblin);
+  font-size: 0.65rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  opacity: 0.7;
+  text-decoration: none;
+  border: 1px solid rgba(234, 228, 217, 0.3);
+  padding: 6px 12px;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+}
+
+.social-link-item:hover {
+  opacity: 1;
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  transform: translateY(-2px);
+}
+
+.footer-escrow-notice {
+  font-size: 0.7rem;
+  line-height: 1.5;
+  color: var(--color-primary);
+  opacity: 0.4;
+  margin: 5px 0 0 0;
+  word-break: keep-all;
+}
+
+/* 하단 바텀 라인 */
+.footer-bottom-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px dashed rgba(234, 228, 217, 0.1);
+  padding-top: 25px;
+  margin-top: 10px;
+}
+
+.footer-copyright {
+  font-size: 0.75rem;
+  color: var(--color-primary);
+  opacity: 0.4;
+  margin: 0;
   letter-spacing: 0.05em;
 }
 
+.footer-bottom-links {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-bottom-links a {
+  font-size: 0.75rem;
+  color: var(--color-primary);
+  opacity: 0.5;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.footer-bottom-links a:hover {
+  opacity: 0.9;
+}
+
+.footer-bottom-links a.privacy-bold {
+  font-weight: 800;
+  opacity: 0.8;
+  color: var(--color-primary);
+}
+
+.footer-bottom-links .divider {
+  font-size: 0.7rem;
+  color: var(--color-primary);
+  opacity: 0.25;
+}
+
 /* =========================================
-   모바일 최적화 (수직 스택 구조)
+   모바일 최적화 (수직 스택 구조 및 풋터 반응형)
    ========================================= */
 @media (max-width: 900px) {
   .package-grid {
@@ -289,6 +482,10 @@
   .grid-item-card {
     min-height: 280px;
   }
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -297,5 +494,15 @@
   }
   .epilogue-header {
     margin-bottom: 40px;
+  }
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 25px;
+  }
+  .footer-bottom-row {
+    flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
+    text-align: left;
   }
 }
