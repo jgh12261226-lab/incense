@@ -139,7 +139,11 @@ export default function EpilogueSection({ isIgnited, onIgnite }) {
         
         {/* 최종 가치 제안 헤더 */}
         <div className="epilogue-header">
-          <span className="epilogue-badge">THE LAST SCENE</span>
+          <span className="epilogue-badge">
+            <span className="badge-num">05</span>
+            <span className="badge-divider">/</span>
+            <span className="badge-text">THE LAST SCENE & RITUAL</span>
+          </span>
           <h2 className="goblin-text epilogue-title">
             이제 당신이 숨겨둔<br />
             <span className="accent-text">진심</span>을 피울 차례입니다.

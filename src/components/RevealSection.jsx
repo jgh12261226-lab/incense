@@ -103,7 +103,11 @@ export default function RevealSection({ isIgnited, onIgnite }) {
           
           {/* 리뉴얼된 프리미엄 테크 헤더 */}
           <div className="reveal-text-header">
-            <span className="reveal-badge">05 / THERMAL FLUID VISUALIZATION</span>
+            <span className="reveal-badge">
+              <span className="badge-num">04</span>
+              <span className="badge-divider">/</span>
+              <span className="badge-text">THERMAL SENSING & REVEAL</span>
+            </span>
             <h2 className="goblin-text reveal-title">
               열감 반응 그을음 속에,<br />
               <span className="accent-text">숨겨진 진심</span>이 피어납니다.
@@ -200,7 +204,11 @@ export default function RevealSection({ isIgnited, onIgnite }) {
                   }}
                 >
                   <div className="ink-message-content">
-                    <span className="message-badge font-mono">05 / SENTIMENT VISUALIZATION</span>
+                    <span className="message-badge font-mono">
+                      <span className="badge-num">04</span>
+                      <span className="badge-divider">/</span>
+                      <span className="badge-text">SENTIMENT VISUALIZATION</span>
+                    </span>
                     <h3 className="message-main font-mono">
                       “우리의 시간은 향처럼 은은하게,<br />
                       영원처럼 묵직하게 남기를.”
