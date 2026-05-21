@@ -148,8 +148,7 @@ export default function EpilogueSection({ isIgnited, onIgnite }) {
           </div>
           <div className="header-right">
             <h2 className="goblin-text section-title-unified">
-              이제 당신이 숨겨둔<br />
-              <span className="accent-text">진심</span>을 피울 차례입니다.
+              이제 당신이 숨겨둔 <span className="accent-text">진심</span>을 피울 차례입니다.
             </h2>
             <p className="section-desc-main">
               단 하나의 특별한 연기로 완성하는 공간의 품격과, 그 감동을 미리 경험한 이들의 진실된 기록.

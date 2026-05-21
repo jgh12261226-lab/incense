@@ -378,12 +378,11 @@
   color: var(--color-accent);
 }
 
-/* 레인보우 체크아웃 결제하기 버튼 */
+/* 은은하고 세련된 딥 오렌지 톤앤톤 결제하기 버튼 */
 .drawer-checkout-action-btn {
   width: 100%;
   height: 52px;
-  background: linear-gradient(90deg, #ff4500, #ff8c00, #3a0dff, #ff4500);
-  background-size: 300% 300%;
+  background: linear-gradient(135deg, var(--color-accent) 0%, #b23b1e 100%);
   color: #fff;
   border: 2px solid var(--color-primary);
   border-radius: 26px;
@@ -396,18 +395,45 @@
   font-size: 1rem;
   cursor: pointer;
   box-shadow: 4px 4px 0px #000;
-  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.45, 1.3);
-  animation: gradientFlow 8s infinite linear;
+  position: relative;
+  overflow: hidden; /* 광택 효과 유출 방지 */
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.45, 1.4), 
+              box-shadow 0.25s ease, 
+              filter 0.25s,
+              background 0.4s ease;
+}
+
+/* 세련되고 정돈된 특별함을 위한 은은한 가로 광택(Shimmer) 효과 */
+.drawer-checkout-action-btn::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -60%;
+  width: 40%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.25) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-30deg);
+  transition: left 0.6s ease;
 }
 
 .drawer-checkout-action-btn:hover {
-  transform: translateY(-3px);
+  transform: translateY(-3px) scale(1.01);
   box-shadow: 6px 6px 0px #000;
-  filter: brightness(1.1) drop-shadow(0 4px 10px rgba(255, 107, 53, 0.25));
+  filter: brightness(1.05) drop-shadow(0 4px 15px rgba(255, 107, 53, 0.2));
+}
+
+.drawer-checkout-action-btn:hover::after {
+  left: 140%;
+  transition: left 0.7s cubic-bezier(0.19, 1, 0.22, 1);
 }
 
 .drawer-checkout-action-btn:active {
-  transform: translateY(2px);
+  transform: translateY(2px) scale(0.98);
   box-shadow: 1px 1px 0px #000;
 }
 

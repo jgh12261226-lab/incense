@@ -349,7 +349,7 @@
   justify-content: center;
   align-items: flex-start; /* 캔 박스들의 윗머리를 완벽히 일렬 락킹(locking)하여 수직 흔들림 0% 보장 */
   gap: 12px;
-  margin-top: 55px; /* 보관함 높이 축소(560px)에 따른 황금 비율 수직 배치 */
+  margin-top: 125px; /* 보관함 높이 축소(560px)에 따른 황금 비율 수직 배치 */
   margin-bottom: auto;
 }
 
@@ -782,7 +782,7 @@
   }
   .vault-items-row {
     gap: 8px;
-    margin-top: 15px;
+    margin-top: 50px;
     margin-bottom: 10px;
     align-items: flex-start;
   }

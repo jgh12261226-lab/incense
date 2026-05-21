@@ -112,8 +112,7 @@ export default function RevealSection({ isIgnited, onIgnite }) {
             </div>
             <div className="header-right">
               <h2 className="goblin-text section-title-unified">
-                열감 반응 그을음 속에,<br />
-                <span className="accent-text">숨겨진 진심</span>이 피어납니다.
+                열감 반응 그을음 속에, <span className="accent-text">숨겨진 진심</span>이 피어납니다.
               </h2>
               <p className="section-desc-main">
                 온도 변화에 따라 닫혀 있던 검은 안막이 걷히며 아날로그 메시지가 서서히 피어오르는 순간.
@@ -217,8 +216,7 @@ export default function RevealSection({ isIgnited, onIgnite }) {
                       <span className="badge-text">SENTIMENT VISUALIZATION</span>
                     </span>
                     <h3 className="message-main font-mono">
-                      “우리의 시간은 향처럼 은은하게,<br />
-                      영원처럼 묵직하게 남기를.”
+                      “우리의 시간은 향처럼 은은하게, 영원처럼 묵직하게 남기를.”
                     </h3>
                     <p className="message-author font-mono">- 너를 생각하며 지핀 잔향 -</p>
                   </div>

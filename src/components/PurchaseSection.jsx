@@ -289,11 +289,16 @@ export default function PurchaseSection({ isIgnited, onIgnite, addToCart, select
 
                 {/* 무지갯빛 네온 그라데이션 구매하기 버튼 */}
                 <button 
-                  className="neon-checkout-trigger-btn"
+                  className={`neon-checkout-trigger-btn ${selectedOption === 'bundle' ? 'bundle-active' : ''}`}
                   onClick={handleBuyClick}
                 >
                   <ShoppingBag size={18} />
-                  <span>이 꿀조합으로 할인받고 데려가기</span>
+                  <span>
+                    {selectedOption === 'bundle' 
+                      ? '이 꿀조합으로 할인받고 데려가기' 
+                      : `${selectedOption === 'stick' ? '시그니처 향 스틱' : '아날로그 틴 캔'} 단품 데려가기`
+                    }
+                  </span>
                 </button>
 
                 <p className="checkout-secure-notice">
@@ -316,7 +321,12 @@ export default function PurchaseSection({ isIgnited, onIgnite, addToCart, select
             <Sparkles size={20} className="spark-spin-icon" />
           </div>
           <div className="toast-texts">
-            <h5>🛒 번들 혜택 장바구니 추가 완료!</h5>
+            <h5>
+              {selectedOption === 'bundle' 
+                ? '🛒 번들 혜택 장바구니 추가 완료!' 
+                : '🛒 장바구니 담기 완료!'
+              }
+            </h5>
             <p>
               {selectedOption === 'bundle' 
                 ? `인센스 스틱 + [${incenseCans[selectedCan].name}] 틴 캔 번들 특별 할인가(25,300원)가 정상 적용되었습니다.`
