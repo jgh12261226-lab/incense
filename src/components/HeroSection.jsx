@@ -146,6 +146,12 @@ export default function HeroSection({ scrollProgress, isIgnited, onIgnite, onHer
           </p>
         </div>
 
+        <span className="section-badge" style={{ marginBottom: '30px' }}>
+          <span className="badge-num">01</span>
+          <span className="badge-divider">/</span>
+          <span className="badge-text">BURN TO CHILL ORIGIN</span>
+        </span>
+
         {/* 3D 양문형 펼침 게이트와 보관고 조립체 (호버 기반 개폐) */}
         <div 
           className={`vault-cabinet-container ${isVaultOpen ? 'vault-open' : ''} flat-frame`}
