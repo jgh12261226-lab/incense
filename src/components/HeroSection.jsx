@@ -92,7 +92,7 @@ export default function HeroSection({ scrollProgress, isIgnited, onIgnite, onHer
     {
       name: 'PALO SANTO',
       shortName: 'PALO',
-      icon: '🪵',
+      icon: '✨', /* 🪵 대신 모든 OS에서 절대 깨지지 않는 정화의 반짝임(✨) 이모지로 수정 */
       color: '#E5A93B',
       desc: '칠레 야생의 신성한 나무 향. 깊은 긴장을 풀어주며, 마음속 부정적인 기운을 맑게 태워 정화해 줍니다.',
       mood: '명상, 불안 해소, 정신 맑음'
@@ -235,7 +235,8 @@ export default function HeroSection({ scrollProgress, isIgnited, onIgnite, onHer
                       }}
                       style={{ '--accent-btn': item.color }}
                     >
-                      {item.icon} 바로구매
+                      {/* 첫번째 아이템(PALO SANTO)에는 🪵 이모지 대신 깨지지 않는 정밀 렌더링용 불꽃(Flame) SVG 아이콘 삽입 */}
+                      {idx === 0 ? <Flame size={12} className="buy-btn-icon" /> : <span className="buy-btn-icon">{item.icon}</span>} 바로구매
                     </button>
                   )}
                 </div>

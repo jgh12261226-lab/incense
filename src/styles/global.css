@@ -423,3 +423,85 @@ p {
   }
 }
 
+/* =========================================
+   전역 스크롤 유도 인디케이터 (우하단 항상 고정)
+   ========================================= */
+.scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  position: fixed;
+  bottom: 36px;
+  right: 44px;
+  z-index: 9998; /* 다른 컨텐츠들보다 위에 항상 노출되도록 높은 z-index 설정 */
+  pointer-events: none; /* 클릭 이벤트를 통과시켜 뒤의 요소를 누를 수 있게 함 */
+  transform: translateY(0) scale(1);
+  transition: opacity 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+              transform 0.45s cubic-bezier(0.25, 1, 0.5, 1),
+              visibility 0.45s;
+}
+
+/* 끝까지 내렸을 때 페이드아웃 및 슬며시 내려가며 찌그러지는 부드러운 인터랙션 */
+.scroll-indicator.is-bottom {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(16px) scale(0.9);
+}
+
+.scroll-text {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  letter-spacing: 0.2em;
+  color: var(--color-primary);
+  opacity: 0.6;
+}
+
+.scroll-mouse {
+  width: 24px;
+  height: 40px;
+  border: 3px solid var(--color-primary);
+  border-radius: 12px;
+  position: relative;
+  opacity: 0.6;
+}
+
+.scroll-wheel {
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-accent);
+  border-radius: 50%;
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: globalScrollAnim 1.6s infinite ease-in-out;
+}
+
+@keyframes globalScrollAnim {
+  0% {
+    opacity: 0;
+    top: 6px;
+  }
+  30% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 0;
+    top: 22px;
+  }
+  100% {
+    opacity: 0;
+    top: 6px;
+  }
+}
+
+/* 모바일 디바이스 최적화 */
+@media (max-width: 768px) {
+  .scroll-indicator {
+    bottom: 24px;
+    right: 24px;
+    transform: scale(0.85); /* 화면 공간 확보를 위해 크기 살짝 축소 */
+  }
+}
+

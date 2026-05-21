@@ -13,6 +13,7 @@ import './styles/global.css';
 
 export default function App() {
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [isAtBottom, setIsAtBottom] = useState(false);
 
   // 각 섹션별 점화 상태 관리 (불이 붙어야 검은 다크베일이 걷히며 밝아짐)
   const [ignitedHero, setIgnitedHero] = useState(false);
@@ -117,6 +118,13 @@ export default function App() {
       if (docHeight > 0) {
         const progress = scrollTop / docHeight;
         setScrollProgress(progress);
+
+        // 바닥에서 20px 이하로 남았을 때 끝에 도달한 것으로 정확히 감지
+        if (docHeight - scrollTop <= 20) {
+          setIsAtBottom(true);
+        } else {
+          setIsAtBottom(false);
+        }
       }
     };
 
@@ -130,8 +138,8 @@ export default function App() {
       {/* 1. 아날로그 미세 감성 그레인 노이즈 오버레이 */}
       <div className="grain-overlay" />
 
-      {/* 전역 고정 스크롤 인디케이터 (우하단 항상 표시) */}
-      <div className="scroll-indicator">
+      {/* 전역 고정 스크롤 인디케이터 (우하단 항상 표시, 바닥 도달 시 페이드아웃) */}
+      <div className={`scroll-indicator ${isAtBottom ? 'is-bottom' : ''}`}>
         <span className="scroll-text">DOWN TO BURN</span>
         <div className="scroll-mouse">
           <div className="scroll-wheel"></div>
