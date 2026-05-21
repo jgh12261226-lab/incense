@@ -2,7 +2,7 @@
 
 :root {
   /* 2026 트렌드 네오 레트로 럭셔리 & 인센스 스모키 색상 팔레트 */
-  --color-bg: #161512;          /* 에보니 스모크 (Ebony Smoke) - 깊은 밤의 스모키 다크 브라운 */
+  --color-bg: #0a0a0a;          /* 에보니 칠흑 (Ebony Black) - 깊고 프리미엄한 다크 리추얼 */
   --color-primary: #EAE4D9;     /* 언블리치드 페이퍼 (Unbleached Paper) - 내추럴 크림 화이트 */
   --color-accent: #FF6B35;      /* 네오 테라코타 (Neo Terracotta) - 타오르는 인센스 불씨 오렌지 */
   --color-accent-rgb: 255, 107, 53;

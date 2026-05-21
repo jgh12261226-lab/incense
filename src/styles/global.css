@@ -111,7 +111,7 @@ p {
 
 /* 1. 히어로 섹션 전용 검은 안개막 (기존 칠흑 기믹 고수) */
 .hero-section .section-dark-veil {
-  background-color: #090807;
+  background-color: var(--color-bg);
   z-index: 8;
   opacity: 0.96; /* 불이 붙기 전에는 거의 암전 상태 */
   transition: opacity 1.8s cubic-bezier(0.25, 1, 0.5, 1);
