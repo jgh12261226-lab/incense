@@ -1,0 +1,451 @@
+/* =========================================
+   🛒 장바구니 드로어 네오 브루탈리즘 스타일시트
+   ========================================= */
+.cart-drawer-viewport {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 10000;
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0.4s;
+}
+
+.cart-drawer-viewport.drawer-active {
+  pointer-events: auto;
+  visibility: visible;
+}
+
+/* 1. 배경 장막 장식 (블러 페이드인) */
+.cart-drawer-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(9, 8, 7, 0.7);
+  backdrop-filter: blur(8px) saturate(110%);
+  -webkit-backdrop-filter: blur(8px) saturate(110%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+.drawer-active .cart-drawer-backdrop {
+  opacity: 1;
+}
+
+/* 2. 우측에서 밀려나오는 장바구니 메인 쉘 */
+.cart-drawer-body {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 450px;
+  height: 100%;
+  background-color: #1a1815; /* 에보니 스모크 */
+  border-left: var(--border-thick);
+  box-shadow: -10px 0px 35px rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transform: translateX(100%);
+  transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.15);
+  z-index: 10002;
+}
+
+.drawer-active .cart-drawer-body {
+  transform: translateX(0);
+}
+
+/* 3. 드로어 헤더 */
+.cart-drawer-header {
+  height: 80px;
+  padding: 0 30px;
+  border-bottom: 2px dashed rgba(234, 228, 217, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #1e1c18;
+}
+
+.drawer-title-flex {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-bag-icon {
+  color: var(--color-accent);
+}
+
+.drawer-title-flex h3 {
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: var(--color-primary);
+}
+
+.drawer-count-chip {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  font-family: var(--font-goblin);
+  font-size: 0.6rem;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+  box-shadow: 2px 2px 0 #000;
+}
+
+.drawer-close-btn {
+  background-color: #27241e;
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s var(--ease-elastic), background-color 0.2s, color 0.2s;
+}
+
+.drawer-close-btn:hover {
+  transform: scale(1.1) rotate(90deg);
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  border-color: var(--color-bg);
+}
+
+/* =========================================
+   4. 메인 콘텐츠 (아이템 카드 리스트)
+   ========================================= */
+.cart-drawer-content {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.cart-items-scroll-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 개별 장바구니 브루탈 카드 */
+.cart-item-brutal-card {
+  background-color: #23211c;
+  border: var(--border-thick);
+  border-color: var(--color-primary);
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  position: relative;
+  box-shadow: 4px 4px 0px #000;
+  transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.45, 1.25), box-shadow 0.25s;
+}
+
+.cart-item-brutal-card:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 6px 6px 0px #000;
+}
+
+.cart-item-avatar-wrap {
+  width: 46px;
+  height: 46px;
+  background-color: #1e1c18;
+  border-radius: 10px;
+  border: 2px solid rgba(234, 228, 217, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.5rem;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.cart-item-info {
+  flex-grow: 1;
+  text-align: left;
+}
+
+.cart-item-title-name {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  margin-bottom: 2px;
+}
+
+.cart-item-aroma-badge {
+  font-size: 0.7rem;
+  color: var(--color-primary);
+  opacity: 0.6;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.cart-item-aroma-badge strong {
+  color: var(--color-accent);
+}
+
+.cart-item-price-tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-goblin);
+  font-size: 0.75rem;
+  color: var(--color-primary);
+  font-weight: 800;
+}
+
+.badge-sale {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  background-color: rgba(255, 107, 53, 0.1);
+  color: var(--color-accent);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-weight: 800;
+}
+
+/* 삭제 버튼 */
+.cart-item-delete-btn {
+  background-color: transparent;
+  border: none;
+  color: var(--color-primary);
+  opacity: 0.4;
+  cursor: pointer;
+  padding: 6px;
+  border-radius: 6px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cart-item-delete-btn:hover {
+  opacity: 1;
+  color: #c92a2a;
+  background-color: rgba(201, 42, 42, 0.08);
+  transform: scale(1.1);
+}
+
+/* =========================================
+   5. 빈 장바구니 감성 뷰
+   ========================================= */
+.empty-cart-view {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 10px;
+}
+
+.empty-graphic-wrap {
+  width: 90px;
+  height: 90px;
+  background-color: #23211c;
+  border: 2px dashed rgba(234, 228, 217, 0.15);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.empty-bag-shake {
+  color: var(--color-primary);
+  opacity: 0.35;
+  animation: emptyBagShake 2s infinite ease-in-out;
+}
+
+@keyframes emptyBagShake {
+  0%, 100% { transform: rotate(0) scale(1); }
+  25% { transform: rotate(-8deg) scale(1.05); }
+  75% { transform: rotate(8deg) scale(0.95); }
+}
+
+.empty-cart-view h4 {
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: var(--color-primary);
+  margin-bottom: 8px;
+}
+
+.empty-cart-view p {
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--color-primary);
+  opacity: 0.55;
+  max-width: 280px;
+  margin-bottom: 22px;
+}
+
+.empty-explore-btn {
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  border: var(--border-thick);
+  border-color: var(--color-primary);
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.75rem;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 3px 3px 0 #000;
+  transition: transform 0.2s var(--ease-elastic), box-shadow 0.2s;
+}
+
+.empty-explore-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 5px 5px 0 #000;
+}
+
+/* =========================================
+   6. 장바구니 푸터 결제 영역
+   ========================================= */
+.cart-drawer-footer {
+  border-top: 2px dashed rgba(234, 228, 217, 0.15);
+  padding: 25px 30px 30px 30px;
+  background-color: #1e1c18;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.drawer-security-row {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  font-size: 0.65rem;
+  color: var(--color-primary);
+  opacity: 0.55;
+}
+
+.shield-green {
+  color: #30d158;
+}
+
+/* 정산 보드 */
+.drawer-summary-board {
+  background-color: #161512;
+  border-radius: 14px;
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid rgba(234, 228, 217, 0.04);
+}
+
+.drawer-sum-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--color-primary);
+  opacity: 0.65;
+}
+
+.free-shipping-accent {
+  color: var(--color-accent);
+  font-weight: 800;
+}
+
+.drawer-sum-row.drawer-grand-total {
+  border-top: 1px solid rgba(234, 228, 217, 0.08);
+  padding-top: 8px;
+  margin-top: 2px;
+  font-size: 0.85rem;
+  opacity: 1;
+}
+
+.drawer-sum-row.drawer-grand-total span:last-child {
+  font-family: var(--font-goblin);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-accent);
+}
+
+/* 레인보우 체크아웃 결제하기 버튼 */
+.drawer-checkout-action-btn {
+  width: 100%;
+  height: 52px;
+  background: linear-gradient(90deg, #ff4500, #ff8c00, #3a0dff, #ff4500);
+  background-size: 300% 300%;
+  color: #fff;
+  border: 2px solid var(--color-primary);
+  border-radius: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px #000;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.45, 1.3);
+  animation: gradientFlow 8s infinite linear;
+}
+
+.drawer-checkout-action-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 6px 6px 0px #000;
+  filter: brightness(1.1) drop-shadow(0 4px 10px rgba(255, 107, 53, 0.25));
+}
+
+.drawer-checkout-action-btn:active {
+  transform: translateY(2px);
+  box-shadow: 1px 1px 0px #000;
+}
+
+/* 쇼핑 계속하기 링크 */
+.drawer-continue-shopping-btn {
+  background-color: transparent;
+  border: none;
+  color: var(--color-primary);
+  opacity: 0.5;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.drawer-continue-shopping-btn:hover {
+  opacity: 1;
+  color: var(--color-accent);
+}
+
+/* =========================================
+   모바일 최적화 (가로 슬림화 및 전체 화면 차지)
+   ========================================= */
+@media (max-width: 480px) {
+  .cart-drawer-body {
+    width: 100%;
+  }
+  .cart-drawer-header {
+    height: 70px;
+    padding: 0 20px;
+  }
+  .cart-drawer-content {
+    padding: 20px;
+  }
+  .cart-drawer-footer {
+    padding: 20px;
+  }
+}

@@ -1,0 +1,58 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main # main 브랜치에 코드가 올라올 때마다 작동
+
+# 외부 배포 권한 획득
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 중복 배포 대기 그룹 설정
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      # 1. 깃허브 서버로 코드 다운로드
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 2. Node.js 환경 조립
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # 3. 필수 패키지 설치
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. 소스코드를 밀키트(dist)로 완성시키기 (빌드)
+      - name: Build
+        run: npm run build
+
+      # 5. 깃허브 페이지 업로드 준비
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      # 6. 완성품(dist 폴더) 포장
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist'
+
+      # 7. 최종 웹사이트 인터넷 배포 실행
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

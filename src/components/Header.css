@@ -1,0 +1,484 @@
+/* =========================================
+   힙한 감성의 상단 고정 헤더 (Glassmorphism & Brutalism)
+   ========================================= */
+.main-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  background-color: transparent;
+  border-bottom: 2px solid transparent;
+  transition: height 0.4s cubic-bezier(0.25, 1, 0.5, 1), 
+              background-color 0.4s ease, 
+              border-bottom 0.4s ease;
+}
+
+/* 스크롤 시 밀착 및 슬림화 효과 */
+.main-header.sticky-scrolled {
+  height: 70px;
+  background-color: rgba(22, 21, 18, 0.85); /* 에보니 스모크 반투명 */
+  backdrop-filter: blur(12px) saturate(120%);
+  -webkit-backdrop-filter: blur(12px) saturate(120%);
+  border-bottom: 2px dashed rgba(234, 228, 217, 0.15); /* 부드러운 절취선 테두리 */
+}
+
+.header-container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* 로고 디자인 */
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  transition: transform 0.3s var(--ease-elastic);
+}
+
+.header-logo:hover {
+  transform: scale(1.05) rotate(-1deg);
+}
+
+.logo-text {
+  font-family: var(--font-goblin);
+  font-size: 1.5rem;
+  color: var(--color-primary);
+  letter-spacing: 0.05em;
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.15);
+}
+
+.logo-ember {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  filter: drop-shadow(0 2px 8px rgba(255, 107, 53, 0.5));
+}
+
+.header-logo-icon {
+  color: var(--color-accent);
+  fill: var(--color-accent);
+}
+
+/* 메뉴 네비게이션 링크 */
+.header-nav {
+  display: flex;
+  gap: 40px;
+}
+
+.nav-item-link {
+  position: relative;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.15em;
+  color: var(--color-primary);
+  text-decoration: none;
+  opacity: 0.7;
+  padding: 8px 0;
+  transition: opacity 0.3s, color 0.3s;
+}
+
+.nav-item-link:hover {
+  opacity: 1;
+  color: var(--color-accent);
+}
+
+.nav-item-link.active {
+  opacity: 1;
+  color: var(--color-accent);
+  text-shadow: 0 0 10px rgba(255, 107, 53, 0.2);
+}
+
+/* 호버/활성화 시 하단에 주황색 불꽃 라인이 생기는 트랜지션 액션 */
+.nav-under-line {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 3px;
+  background-color: var(--color-accent);
+  border-radius: 2px;
+  transition: width 0.3s cubic-bezier(0.25, 1, 0.5, 1), 
+              left 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.nav-item-link:hover .nav-under-line,
+.nav-item-link.active .nav-under-line {
+  width: 100%;
+  left: 0;
+  box-shadow: 0 0 8px var(--color-accent);
+}
+
+/* 우측 힙한 예약 액션 버튼 */
+.custom-order-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+  border: var(--border-thick);
+  padding: 8px 20px;
+  border-radius: 30px;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  box-shadow: 3px 3px 0px var(--color-primary);
+  transition: transform 0.2s var(--ease-elastic), 
+              box-shadow 0.2s ease, 
+              background-color 0.2s;
+}
+
+.header-btn-icon {
+  stroke-width: 3px;
+}
+
+.custom-order-btn:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 6px 6px 0px var(--color-primary);
+  background-color: #ff8052; /* 더 생생하고 타오르는 오렌지 */
+}
+
+.custom-order-btn:active {
+  transform: translateY(1px);
+  box-shadow: 2px 2px 0px var(--color-primary);
+}
+
+/* =========================================
+   태블릿 및 모바일 최적화 (가로 슬림화 및 단순화)
+   ========================================= */
+@media (max-width: 900px) {
+  .header-nav {
+    gap: 20px;
+  }
+}
+
+@media (max-width: 680px) {
+  .main-header {
+    height: 70px;
+  }
+  .main-header.sticky-scrolled {
+    height: 60px;
+  }
+  .logo-text {
+    font-size: 1.25rem;
+  }
+  .header-nav {
+    display: none; /* 모바일에서는 깔끔함을 위해 메뉴 감춤 (원페이지 몰입형 극대화) */
+  }
+  .custom-order-btn {
+    padding: 6px 14px;
+    font-size: 0.7rem;
+  }
+}
+
+/* =========================================
+   신규: 로그인 탭 & 장바구니 아이콘 네오 브루탈리즘 스타일 (화면 절대 우측 맨 끝 고정)
+   ========================================= */
+
+.header-right-quick-actions {
+  position: absolute;
+  right: 40px; /* 화면 가장 맨 오른쪽 끝에 완벽히 밀착 */
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  z-index: 1010; /* 헤더의 타 요소보다 상위에 렌더링되게 처리 */
+}
+
+/* 로그인 탭 버튼 */
+.header-login-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-primary);
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  padding: 8px 12px;
+  position: relative;
+  opacity: 0.85;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.header-login-btn:hover {
+  opacity: 1;
+  color: var(--color-accent);
+  transform: translateY(-1px);
+}
+
+.login-btn-underline {
+  position: absolute;
+  bottom: 4px;
+  left: 12px;
+  right: 12px;
+  height: 2px;
+  background-color: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.header-login-btn:hover .login-btn-underline {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* 장바구니 아이콘 버튼 */
+.header-cart-btn {
+  background: var(--color-bg);
+  border: var(--border-thick);
+  color: var(--color-primary);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 2px 2px 0px var(--color-primary);
+  transition: transform 0.2s var(--ease-elastic), box-shadow 0.2s ease, background-color 0.2s;
+}
+
+.cart-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-cart-icon {
+  stroke-width: 2.5px;
+  transition: transform 0.2s ease;
+}
+
+.header-cart-btn:hover {
+  transform: translateY(-2px) rotate(-5deg);
+  box-shadow: 4px 4px 0px var(--color-primary);
+  background-color: var(--color-accent);
+  color: var(--color-bg);
+}
+
+.header-cart-btn:hover .header-cart-icon {
+  transform: scale(1.05);
+}
+
+.header-cart-btn:active {
+  transform: translateY(1px) rotate(0deg);
+  box-shadow: 1px 1px 0px var(--color-primary);
+}
+
+/* 장바구니 카운트 배지 (오렌지빛 원형 뱃지) */
+.cart-badge {
+  position: absolute;
+  top: -12px;
+  right: -12px;
+  background-color: #ff3c00; /* 아주 강력한 다이내믹 레드-오렌지 */
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: 0.65rem;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  border: 1.5px solid var(--color-bg);
+  box-shadow: 1.5px 1.5px 0px var(--color-primary);
+  z-index: 10;
+}
+
+/* 퐁- 하고 탄성으로 늘어나는 팝 키프레임 애니메이션 */
+.bounce-pop {
+  animation: bouncePopKeyframe 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.5) forwards;
+}
+
+@keyframes bouncePopKeyframe {
+  0% {
+    transform: scale(0.4);
+  }
+  50% {
+    transform: scale(1.35);
+  }
+  75% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@media (max-width: 680px) {
+  .header-right-quick-actions {
+    right: 15px; /* 모바일 화면은 패딩을 더 줄여서 완전 밀착 유지 */
+    gap: 8px;
+  }
+  .header-login-btn {
+    font-size: 0.75rem;
+    padding: 6px 8px;
+  }
+  .header-cart-btn {
+    width: 34px;
+    height: 34px;
+  }
+}
+/* 햄버거 메뉴 버튼 */
+.header-menu-btn {
+  background: var(--color-bg);
+  border: var(--border-thick);
+  color: var(--color-primary);
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 2px 2px 0px var(--color-primary);
+  transition: transform 0.2s var(--ease-elastic), box-shadow 0.2s ease, background-color 0.2s;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.header-menu-btn:hover {
+  transform: translateY(-2px) rotate(5deg);
+  box-shadow: 4px 4px 0px var(--color-primary);
+  background-color: var(--color-primary);
+  color: var(--color-bg);
+}
+
+.header-menu-btn:active {
+  transform: translateY(1px) rotate(0);
+  box-shadow: 1px 1px 0px var(--color-primary);
+}
+
+/* 드롭다운 메뉴 패널 */
+.header-menu-dropdown {
+  position: absolute;
+  top: calc(100% + 14px);
+  right: 0;
+  width: 230px;
+  background: rgba(22, 21, 18, 0.97);
+  border: var(--border-thick);
+  border-radius: 18px;
+  box-shadow: 8px 8px 0px #000;
+  padding: 8px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  /* 진입 애니메이션 */
+  animation: menuDropIn 0.25s cubic-bezier(0.175, 0.885, 0.45, 1.25) forwards;
+  transform-origin: top right;
+}
+
+@keyframes menuDropIn {
+  from {
+    opacity: 0;
+    transform: scale(0.88) translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* 드롭다운 섹션 구분 레이블 */
+.menu-section-label {
+  font-family: var(--font-goblin);
+  font-size: 0.5rem;
+  font-weight: 800;
+  letter-spacing: 0.15em;
+  color: var(--color-primary);
+  opacity: 0.4;
+  padding: 6px 14px 2px;
+}
+
+/* 드롭다운 메뉴 아이템 */
+.menu-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 12px;
+  border: none;
+  background: transparent;
+  color: var(--color-primary);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  transition: background-color 0.15s ease, color 0.15s ease, transform 0.15s ease;
+}
+
+.menu-dropdown-item:hover {
+  background-color: rgba(255, 107, 53, 0.1);
+  color: var(--color-accent);
+  transform: translateX(3px);
+}
+
+.menu-dropdown-item.menu-item-active {
+  background-color: rgba(255, 107, 53, 0.12);
+  color: var(--color-accent);
+}
+
+.menu-dropdown-item.menu-item-divider {
+  border-top: 1px dashed rgba(234, 228, 217, 0.1);
+  margin-top: 4px;
+  padding-top: 11px;
+}
+
+.menu-item-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background-color: rgba(234, 228, 217, 0.06);
+  border: 1px solid rgba(234, 228, 217, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background-color 0.15s ease;
+}
+
+.menu-dropdown-item:hover .menu-item-icon {
+  background-color: rgba(255, 107, 53, 0.15);
+}
+
+/* 드롭다운 바깥 클릭 오버레이 */
+.menu-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1999;
+}
+
+@media (max-width: 680px) {
+  .header-menu-btn {
+    width: 34px;
+    height: 34px;
+  }
+  .header-menu-dropdown {
+    width: 200px;
+  }
+}

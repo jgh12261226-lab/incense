@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Jua&family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;600;800&display=swap');
+
+:root {
+  /* 2026 트렌드 네오 레트로 럭셔리 & 인센스 스모키 색상 팔레트 */
+  --color-bg: #161512;          /* 에보니 스모크 (Ebony Smoke) - 깊은 밤의 스모키 다크 브라운 */
+  --color-primary: #EAE4D9;     /* 언블리치드 페이퍼 (Unbleached Paper) - 내추럴 크림 화이트 */
+  --color-accent: #FF6B35;      /* 네오 테라코타 (Neo Terracotta) - 타오르는 인센스 불씨 오렌지 */
+  --color-accent-rgb: 255, 107, 53;
+  --color-smoke-rgb: 234, 228, 217;
+  --color-dark-glow: rgba(22, 21, 18, 0.85);
+
+  /* 타이포그래피 매핑 */
+  --font-goblin: 'Jua', 'Sandoll Mungchi', 'Arial Black', sans-serif;
+  --font-english: 'Instrument Serif', serif;
+  --font-body: 'Outfit', 'Pretendard', sans-serif;
+
+  /* 3D 원근법 및 그림자 효과 */
+  --shadow-3d: 6px 6px 0px var(--color-bg);
+  --shadow-3d-accent: 6px 6px 0px var(--color-accent);
+  --border-thick: 4px solid var(--color-bg);
+  
+  /* 전역 물리 효과 트랜지션 */
+  --ease-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  --transition-elastic: transform 0.4s var(--ease-elastic);
+}

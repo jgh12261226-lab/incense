@@ -1,0 +1,233 @@
+/* 웜 샌드 베이지 & 네오 브루탈리즘 장바구니 확인 모달 스타일 */
+.cart-confirm-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(10, 10, 9, 0.65); /* 노란 기가 도는 딥 차콜 */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 9999; /* 최상위에 배치하여 절대 가려지지 않음 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.cart-confirm-modal {
+  position: relative;
+  width: 100%;
+  max-width: 460px;
+  background: rgba(247, 244, 237, 0.98); /* 우아한 아날로그 크림 미색 */
+  border: 3px solid #1a1a1a; /* 굵은 검정 테두리로 시인성 극대화 */
+  border-radius: 24px;
+  padding: 32px 28px 28px;
+  text-align: center;
+  box-shadow: 8px 8px 0px #1a1a1a, 
+              0 0 40px var(--accent-glow)1e; /* 동적 캔 색상의 부드러운 네온 글로우 */
+  overflow: hidden;
+  color: #1e1e1e; /* 묵직한 고대비 가독성 확보 */
+}
+
+/* 동적 네온 오라 효과 */
+.cart-confirm-modal::before {
+  content: '';
+  position: absolute;
+  top: -10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  height: 80px;
+  background: radial-gradient(circle, var(--accent-glow) 0%, rgba(255,255,255,0) 80%);
+  opacity: 0.15;
+  filter: blur(25px);
+  pointer-events: none;
+}
+
+/* 닫기 버튼 */
+.cart-confirm-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #eae4d9;
+  border: 2px solid #1a1a1a;
+  color: #444;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  box-shadow: 2px 2px 0px #1a1a1a;
+}
+
+.cart-confirm-close-btn:hover {
+  background-color: var(--accent-glow);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 3px 3px 0px #1a1a1a;
+}
+
+.cart-confirm-close-btn:active {
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0px #1a1a1a;
+}
+
+/* 상단 엠블럼 */
+.cart-confirm-emblem {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2.5px solid #1a1a1a;
+  box-shadow: 3px 3px 0px #1a1a1a;
+}
+
+.emblem-bag-icon {
+  color: #fff;
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2));
+}
+
+.emblem-sparkles {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  color: #ffd05b;
+}
+
+.sparkle-1 {
+  animation: floatEmber 3s infinite alternate ease-in-out;
+}
+
+.sparkle-2 {
+  position: absolute;
+  bottom: -4px;
+  left: -20px;
+  animation: floatEmber 4s infinite alternate-reverse ease-in-out;
+}
+
+/* 바디 구조 */
+.cart-confirm-tag {
+  font-family: 'Inter', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  color: #555;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 8px;
+}
+
+.cart-confirm-title {
+  font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+  font-size: 24px;
+  font-weight: 800;
+  color: #111;
+  margin-bottom: 24px;
+}
+
+/* 제품 카드 프리뷰 */
+.cart-confirm-preview-card {
+  background: #ffffff; /* 하얀 종이 질감 */
+  border: 2px solid #1a1a1a;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
+  margin-bottom: 20px;
+  box-shadow: 4px 4px 0px #1a1a1a;
+}
+
+.preview-card-left {
+  font-size: 32px;
+  line-height: 1;
+}
+
+.preview-card-right h4 {
+  font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  margin: 0 0 4px 0;
+}
+
+.preview-card-right p {
+  font-size: 13px;
+  color: #555;
+  margin: 0;
+  line-height: 1.4;
+}
+
+.cart-confirm-notice {
+  font-size: 13px;
+  color: #444;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+/* 푸터 버튼 배치 */
+.cart-confirm-footer {
+  display: flex;
+  gap: 12px;
+}
+
+.cart-confirm-btn {
+  flex: 1;
+  height: 52px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.btn-cancel {
+  background: #eae4d9;
+  border: 2px solid #b5af9f;
+  color: #555;
+  box-shadow: 3px 3px 0px #1a1a1a;
+}
+
+.btn-cancel:hover {
+  background: #dfd9ce;
+  color: #222;
+  border-color: #1a1a1a;
+  transform: translateY(-2px);
+  box-shadow: 5px 5px 0px #1a1a1a;
+}
+
+.btn-cancel:active {
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0px #1a1a1a;
+}
+
+.btn-confirm {
+  border: 2px solid #1a1a1a !important;
+  color: #fff;
+  box-shadow: 4px 4px 0px #1a1a1a !important;
+}
+
+.btn-confirm:hover {
+  filter: brightness(1.12);
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0px #1a1a1a !important;
+}
+
+.btn-confirm:active {
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0px #1a1a1a !important;
+}
+
+/* 슬라이드 팝인 애니메이션 */
+@keyframes floatEmber {
+  0% { transform: translateY(0) scale(1); opacity: 0.7; }
+  100% { transform: translateY(-4px) scale(1.15); opacity: 1; }
+}

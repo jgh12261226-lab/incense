@@ -1,0 +1,306 @@
+@import './variables.css';
+
+/* 1. 기본 리셋 및 전역 스타일 */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-primary);
+  font-family: var(--font-body);
+  font-weight: 500; /* 전체 본문 글씨를 기본 한 단계 더 두껍게 튜닝해 가독성 강화 */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  position: relative;
+  /* 커스텀 마우스 포인터 적용을 위해 기본 커서 숨김 */
+  cursor: none;
+}
+
+p {
+  font-weight: 500; /* 기본 문장 굵기 강화 */
+  letter-spacing: -0.01em;
+}
+
+/* 2. 감성적인 스크롤바 스타일 */
+::-webkit-scrollbar {
+  width: 14px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border: 4px solid var(--color-bg);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ff8552;
+}
+
+/* =========================================
+   전역 무한 상승 연기 파티클 (Rising Smoke)
+   ========================================= */
+.global-smoke-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 2; /* 콘텐츠 뒤, 배경 그리드 위에 위치하여 은은하게 흐르도록 함 */
+  overflow: hidden;
+}
+
+.rising-smoke-particle {
+  position: absolute;
+  bottom: -150px;
+  background-color: rgba(234, 228, 217, 0.05); /* 극도로 은은한 잿빛 아지랑이 */
+  border-radius: 50%;
+  filter: blur(25px);
+  animation: riseAndFade 14s infinite linear;
+}
+
+@keyframes riseAndFade {
+  0% {
+    transform: translateY(0) scale(0.6) translateX(0);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.7;
+    border-radius: 40% 60% 50% 50% / 40% 40% 60% 50%;
+  }
+  50% {
+    transform: translateY(-50vh) scale(1.6) translateX(80px);
+    opacity: 0.3;
+    border-radius: 50% 40% 60% 50% / 50% 50% 40% 60%;
+  }
+  85% {
+    opacity: 0.1;
+  }
+  100% {
+    transform: translateY(-120vh) scale(2.8) translateX(-50px);
+    opacity: 0;
+    filter: blur(40px);
+  }
+}
+
+/* =========================================
+   섹션별 다크 베일 및 인센스 점화 리빌 클래스
+   ========================================= */
+/* =========================================
+   섹션별 다크 베일 및 인센스 점화 리빌 클래스
+   ========================================= */
+.section-dark-veil {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* 1. 히어로 섹션 전용 검은 안개막 (기존 칠흑 기믹 고수) */
+.hero-section .section-dark-veil {
+  background-color: #090807;
+  z-index: 8;
+  opacity: 0.96; /* 불이 붙기 전에는 거의 암전 상태 */
+  transition: opacity 1.8s cubic-bezier(0.25, 1, 0.5, 1);
+  mix-blend-mode: multiply;
+}
+
+.hero-section .section-dark-veil.ignited {
+  opacity: 0.04;
+}
+
+
+/* 인센스 스틱 기본 UI 오브제 */
+.incense-stick-trigger-holder {
+  position: absolute;
+  top: 40px;
+  right: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  z-index: 15; /* 항상 다크 베일보다 상단에 위치하여 유저가 터치할 수 있게 함 */
+  cursor: pointer;
+  background-color: rgba(22, 21, 18, 0.7);
+  padding: 12px 18px;
+  border-radius: 16px;
+  border: 2px dashed rgba(234, 228, 217, 0.2);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  transition: border-color 0.4s, transform 0.3s;
+}
+
+.incense-stick-trigger-holder:hover {
+  transform: translateY(-3px);
+}
+
+.incense-stick-trigger-holder.active-ignited {
+  border: 2px solid var(--color-accent);
+  box-shadow: 0 0 20px rgba(255, 107, 53, 0.3);
+}
+
+.trigger-helper-label {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  font-weight: 800;
+  color: var(--color-primary);
+  opacity: 0.6;
+  transition: color 0.3s, opacity 0.3s;
+}
+
+.active-ignited .trigger-helper-label {
+  color: var(--color-accent);
+  opacity: 1;
+}
+
+.incense-wood-stand {
+  width: 50px;
+  height: 6px;
+  background-color: #5c4e3c;
+  border-radius: 3px;
+  position: relative;
+  margin-top: 10px;
+}
+
+.incense-stick-body {
+  width: 4px;
+  height: 45px;
+  background-color: #8c765c;
+  position: absolute;
+  bottom: 6px;
+  left: 23px;
+  transform-origin: bottom center;
+  transform: rotate(15deg);
+  border-radius: 2px;
+  transition: background-color 0.5s;
+}
+
+.active-ignited .incense-stick-body {
+  background-color: #5c402d;
+}
+
+/* 타오르는 불씨 */
+.incense-fire-tip {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  width: 8px;
+  height: 8px;
+  background-color: var(--color-accent);
+  border-radius: 50%;
+  transition: transform 0.4s var(--ease-elastic);
+}
+
+.active-ignited .incense-fire-tip {
+  transform: translateX(-50%) scale(1.4);
+  box-shadow: 0 0 10px var(--color-accent), 0 0 20px var(--color-accent);
+  animation: emberFlicker 0.25s infinite alternate ease-in-out;
+}
+
+
+/* 3. 힙한 아날로그 감성의 노이즈 그레인 오버레이 */
+.grain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* 4. 고블린풍 볼드 텍스트 스타일 (사용자 제공 참고 반영) */
+.goblin-text {
+  font-family: var(--font-goblin);
+  font-weight: 900;
+  color: var(--color-primary); /* 주조색: 언블리치드 페이퍼 */
+  -webkit-text-stroke: 0.3px #0b0a08; /* 테두리를 훨씬 가늘게 하여 글자 안의 속공간을 보존하고 가독성 극대화 */
+  
+  /* 툭 떨어지는 입체 섀도우에 은은한 오렌지 불씨 글로우를 깔아 다크 배경에서도 글자가 튀어나와 보이도록 입체감 최적화 */
+  text-shadow: 
+    4px 4px 0px #0b0a08,
+    0 0 15px rgba(255, 107, 53, 0.25); 
+    
+  transform-origin: center;
+  transition: var(--transition-elastic);
+  display: inline-block;
+}
+
+/* 호버 시 또는 진입 시 팅! 하고 부풀어 오르는 효과 (튀는 정도를 덜 과하고 부드럽게 조정) */
+.goblin-text:hover {
+  transform: scale(1.04) rotate(-0.5deg) translateY(-2px); 
+  color: var(--color-accent); /* 강조색: 네오 테라코타 (불씨 오렌지) */
+  -webkit-text-stroke: 0.3px #0b0a08;
+  text-shadow: 
+    4px 4px 0px #0b0a08,
+    0 0 20px rgba(255, 107, 53, 0.35);
+}
+
+/* 무한으로 젤리처럼 위아래로 일렁이는 찌글 모션 (Jiggle) - 강도를 덜 과하게 정밀 조율 */
+@keyframes jiggle {
+  0%, 100% { 
+    transform: scale(1) translateY(0); 
+  }
+  50% { 
+    transform: scale(1.02, 0.98) translateY(-3px) rotate(0.2deg); 
+  }
+}
+
+.goblin-item-active {
+  animation: jiggle 2.5s infinite ease-in-out;
+}
+
+/* 신규: 단어마다 통통 튀게 하되 엇갈리게(Staggered) 흐르는 모션 데코 */
+.stagger-word {
+  display: inline-block;
+  transition: var(--transition-elastic);
+}
+
+.goblin-item-active .stagger-word {
+  animation: jiggle 3s infinite ease-in-out;
+}
+
+.stagger-word:nth-of-type(1) { animation-delay: 0s; }
+.stagger-word:nth-of-type(2) { animation-delay: 0.15s; }
+.stagger-word:nth-of-type(3) { animation-delay: 0.3s; }
+.stagger-word:nth-of-type(4) { animation-delay: 0.45s; }
+.stagger-word:nth-of-type(5) { animation-delay: 0.6s; }
+
+/* 인센스 불씨 및 연기가 흩날리는 백그라운드 발광 이펙트 */
+.smoke-glow {
+  position: absolute;
+  width: 450px;
+  height: 450px;
+  background: radial-gradient(circle, rgba(var(--color-accent-rgb), 0.12) 0%, rgba(var(--color-smoke-rgb), 0.03) 40%, rgba(var(--color-accent-rgb), 0) 70%);
+  pointer-events: none;
+  z-index: 1;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: screen;
+  transition: width 0.3s, height 0.3s;
+}
+
+/* 포커싱을 위한 헬퍼 클래스들 */
+.accent-text {
+  color: var(--color-accent);
+}
+
+.english-title {
+  font-family: var(--font-english);
+  font-style: italic;
+}

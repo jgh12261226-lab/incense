@@ -1,0 +1,149 @@
+.custom-cursor-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none;
+  z-index: 999999; /* 로그인 오버레이(10002) 및 장바구니 드로어보다도 높은 극상위 배치로 마우스 가림 완벽 방지 */
+  transition: opacity 0.3s ease;
+}
+
+.cursor-hidden {
+  opacity: 0;
+}
+
+/* 1. 이글거리는 전반 주황빛 화염 열기 광원 */
+.cursor-flame-glow {
+  position: fixed;
+  width: 90px;
+  height: 90px;
+  background: radial-gradient(circle, rgba(255, 107, 53, 0.32) 0%, rgba(255, 107, 53, 0.05) 50%, rgba(0, 0, 0, 0) 80%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+/* 2. 타오르는 리얼 화염 코어 (끝이 뾰족한 불꽃 쉐입) */
+.cursor-fire-core {
+  position: fixed;
+  width: 18px;
+  height: 28px;
+  background: linear-gradient(to top, #ff3300, #ff6600, #ffcc00);
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  transform: translate(-50%, -80%) rotate(-45deg);
+  pointer-events: none;
+  box-shadow: 0 -4px 10px rgba(255, 60, 0, 0.8), 0 -8px 20px rgba(255, 120, 0, 0.6);
+  transform-origin: bottom center;
+  transition: transform 0.15s var(--ease-elastic);
+}
+
+/* 물방울 뒤집어서 뾰족한 화염 쉐입을 만드는 수학적 CSS 트릭 */
+.cursor-fire-core {
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  border-bottom-right-radius: 100%;
+  transform: translate(-50%, -85%) rotate(45deg); /* 끝자락이 위로 향하게 정렬 */
+}
+
+/* 3. 노란색 속불꽃 (Flame Inner Yellow) */
+.flame-inner-yellow {
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 10px;
+  height: 16px;
+  background: linear-gradient(to top, #ffcc00, #ffff99);
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 100%;
+  border-top-right-radius: 100%;
+  border-bottom-right-radius: 100%;
+  opacity: 0.9;
+}
+
+/* 4. 심지의 파란 가스 불꽃 (Flame Core Blue) */
+.flame-core-blue {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  width: 6px;
+  height: 6px;
+  background-color: #3399ff;
+  border-radius: 50%;
+  opacity: 0.8;
+  filter: blur(0.5px);
+  box-shadow: 0 0 4px #0066ff;
+}
+
+/* 5. 이글이글 뒤따르는 주황색 화염 잔상 */
+.cursor-flame-trail {
+  position: fixed;
+  width: 12px;
+  height: 18px;
+  background-color: rgba(255, 107, 53, 0.45);
+  border-radius: 50% 50% 0 50% / 50% 50% 0 50%;
+  transform: translate(-50%, -70%) rotate(45deg);
+  pointer-events: none;
+  filter: blur(1px);
+  mix-blend-mode: screen;
+}
+
+/* 6. 회백색 흐르는 연기 잔상 */
+.cursor-smoke-trail {
+  position: fixed;
+  width: 25px;
+  height: 25px;
+  background-color: rgba(234, 228, 217, 0.15);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  filter: blur(4px);
+  mix-blend-mode: screen;
+}
+
+/* 클릭 시 화염이 왈칵 커지는 다이내믹 화재 연출 */
+.cursor-clicked .cursor-fire-core {
+  width: 24px;
+  height: 38px;
+  box-shadow: 0 -6px 15px rgba(255, 60, 0, 0.9), 0 -12px 30px rgba(255, 120, 0, 0.8);
+}
+
+.cursor-clicked .cursor-flame-glow {
+  width: 140px;
+  height: 140px;
+}
+
+/* 화염의 무작위 일렁임(Wobble) 키프레임 대응 클래스 */
+.cursor-fire-core.wobble-0 {
+  transform: translate(-50%, -85%) rotate(45deg) scaleX(1);
+}
+.cursor-fire-core.wobble-1 {
+  transform: translate(-50%, -88%) rotate(42deg) scaleX(0.9) skewX(2deg);
+}
+.cursor-fire-core.wobble-2 {
+  transform: translate(-50%, -83%) rotate(48deg) scaleX(1.05) skewX(-2deg);
+}
+.cursor-fire-core.wobble-3 {
+  transform: translate(-50%, -86%) rotate(45deg) scaleX(0.95);
+}
+
+/* 터치 디바이스 가림 */
+@media (hover: none) and (pointer: coarse) {
+  .custom-cursor-container {
+    display: none;
+  }
+}
+
+/* 7. 몽글몽글 솟아오르는 리얼 연기 파티클 */
+.cursor-smoke-particle {
+  position: fixed;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(245, 240, 230, 0.58) 0%, rgba(245, 240, 230, 0.18) 55%, rgba(0, 0, 0, 0) 90%);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  filter: blur(2.5px);
+  mix-blend-mode: screen;
+  will-change: transform, opacity, left, top;
+}

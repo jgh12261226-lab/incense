@@ -1,0 +1,268 @@
+.reveal-container-scroll {
+  width: 100%;
+  height: 220vh;
+  position: relative;
+  background-color: var(--color-bg);
+}
+
+.reveal-sticky-viewport {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.darkness-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #0b0a08;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* 인센스 불씨 주변 아스라이 흩어지는 연기 광원 */
+.incense-burn-glow {
+  position: absolute;
+  top: 55%;
+  left: 50%;
+  width: 480px;
+  height: 480px;
+  background: radial-gradient(circle, rgba(255, 107, 53, 0.20) 0%, rgba(234, 228, 217, 0.05) 35%, rgba(0, 0, 0, 0) 70%);
+  border-radius: 50%;
+  z-index: 2;
+  pointer-events: none;
+  mix-blend-mode: screen;
+}
+
+.reveal-content-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 5;
+  padding: 40px 20px;
+}
+
+.reveal-text-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.reveal-badge {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.25em;
+  color: var(--color-accent);
+  margin-bottom: 12px;
+  display: inline-block;
+}
+
+.reveal-title {
+  font-size: 2.2rem;
+  line-height: 1.3;
+}
+
+/* =========================================
+   2. 인센스 플레이트 뷰 (Incense Plate Top-view)
+   ========================================= */
+.candle-melt-viewport {
+  width: 380px;
+  height: 380px;
+  position: relative;
+  perspective: 1000px;
+}
+
+/* 돌/세라믹 재질 인센스 플레이트 테두리 */
+.incense-plate-rim {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 8px solid #282622;
+  box-shadow: 
+    0 20px 50px rgba(0, 0, 0, 0.8),
+    inset 0 4px 20px rgba(0, 0, 0, 0.6),
+    0px 0px 30px rgba(255, 107, 53, 0.1);
+  position: relative;
+  overflow: hidden;
+  background-color: #161512;
+}
+
+/* 플레이트 반사광 */
+.incense-plate-rim::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid rgba(234, 228, 217, 0.06);
+  pointer-events: none;
+}
+
+/* =========================================
+   [레이어 1] 비밀 메시지 레이어 (하단)
+   ========================================= */
+.hidden-message-layer {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #0b0a08;
+  padding: 40px;
+  text-align: center;
+}
+
+.message-content {
+  border: 2px solid var(--color-accent);
+  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  background: radial-gradient(circle, rgba(22, 21, 18, 0.95) 0%, #0b0a08 80%);
+  box-shadow: inset 0 0 30px rgba(255, 107, 53, 0.08);
+}
+
+.message-category {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  font-weight: 800;
+  color: var(--color-accent);
+  margin-bottom: 12px;
+}
+
+.message-main-text {
+  font-family: var(--font-goblin);
+  font-size: 1.45rem;
+  line-height: 1.45;
+  color: var(--color-primary);
+  text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.5);
+  margin-bottom: 15px;
+}
+
+.message-sub {
+  font-family: var(--font-english);
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--color-primary);
+  opacity: 0.7;
+}
+
+/* =========================================
+   [레이어 2] 불투명 잿빛 스모크 연기막 레이어 (상단)
+   ========================================= */
+.solid-smoke-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #dfd8cb; /* 회백색 잿빛 연기 컬러 */
+  transition: clip-path 0.1s ease;
+  z-index: 10;
+}
+
+/* 몽환적 연기 아지랑이 텍스처 */
+.smoke-surface-texture {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+  background: 
+    radial-gradient(circle, rgba(234, 228, 217, 0.4) 0%, rgba(22, 21, 18, 0.15) 100%),
+    repeating-linear-gradient(45deg, rgba(22, 21, 18, 0.02) 0px, rgba(22, 21, 18, 0.02) 2px, transparent 2px, transparent 4px);
+  position: relative;
+}
+
+/* 중앙 홀더 코어 */
+.holder-core {
+  width: 22px;
+  height: 22px;
+  background-color: #2b2823;
+  border-radius: 50%;
+  border: 3px solid var(--color-bg);
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  margin-bottom: 20px;
+}
+
+/* 타들어 가는 붉은 불씨 */
+.incense-stick-ember {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 1.6rem;
+  pointer-events: none;
+  filter: drop-shadow(0 0 10px var(--color-accent));
+}
+
+/* 인센스 불씨 껌뻑이는 Flicker 애니메이션 */
+@keyframes emberFlicker {
+  0%, 100% {
+    transform: translateX(-50%) scale(1) translateY(0);
+    opacity: 0.95;
+    filter: drop-shadow(0 0 8px var(--color-accent));
+  }
+  50% {
+    transform: translateX(-50%) scale(1.15) translateY(-2px);
+    opacity: 1;
+    filter: drop-shadow(0 0 14px var(--color-accent));
+  }
+}
+
+.animate-ember {
+  animation: emberFlicker 0.25s infinite alternate ease-in-out;
+}
+
+.smoke-guide-text {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  color: var(--color-bg);
+  opacity: 0.65;
+  text-align: center;
+  position: absolute;
+  bottom: 60px;
+  width: 100%;
+}
+
+@media (max-width: 600px) {
+  .reveal-title {
+    font-size: 1.6rem;
+  }
+  .candle-melt-viewport {
+    width: 290px;
+    height: 290px;
+  }
+  .message-main-text {
+    font-size: 1.1rem;
+  }
+  .message-content {
+    padding: 15px;
+  }
+  .smoke-guide-text {
+    bottom: 40px;
+  }
+}

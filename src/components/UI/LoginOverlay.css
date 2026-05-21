@@ -1,0 +1,275 @@
+/* =========================================
+   🔐 3D 로그인 오버레이 웜 베이지 네오 브루탈리즘 스타일시트
+   ========================================= */
+.login-overlay-portal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000; /* 전역 모든 구역보다 항상 맨 위에 출력 */
+  overflow: hidden;
+}
+
+/* 1. 뒷면 어두운 블러 처리막 */
+.login-backdrop-veil {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(10, 10, 9, 0.65); /* 노란 기가 도는 딥 차콜 */
+  backdrop-filter: blur(10px) saturate(110%);
+  -webkit-backdrop-filter: blur(10px) saturate(110%);
+  transition: opacity 0.4s ease;
+}
+
+/* 2. 3D 튀는 로그인 메인 카드 보드 (웜 샌드 베이지) */
+.login-modal-card {
+  position: relative;
+  width: 90%;
+  max-width: 480px;
+  background-color: rgba(247, 244, 237, 0.98); /* 우아한 아날로그 크림 미색 */
+  border: 3px solid #1a1a1a; /* 굵은 검정 테두리 통일 */
+  border-radius: 24px;
+  padding: 40px 30px;
+  box-shadow: 12px 12px 0px #1a1a1a; /* 입체 플랫 그림자 통일 */
+  z-index: 10002;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  color: #1e1e1e; /* 고대비 글자색 */
+  transform-origin: center center;
+  transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.45, 1.25), box-shadow 0.3s ease;
+}
+
+.login-modal-card:hover {
+  transform: translateY(-4px) scale(1.01);
+  box-shadow: 16px 16px 0px #1a1a1a;
+}
+
+/* 진입 시 퐁- 하고 튀어 오르는 젤리 애니메이션 */
+.card-jiggle-pop {
+  animation: jigglePop 0.55s cubic-bezier(0.175, 0.885, 0.45, 1.45) forwards;
+}
+
+@keyframes jigglePop {
+  0% { transform: scale(0.6) translateY(50px) rotate(-5deg); opacity: 0; }
+  50% { transform: scale(1.08) translateY(-10px) rotate(3deg); opacity: 0.95; }
+  75% { transform: scale(0.96) translateY(4px) rotate(-1deg); opacity: 1; }
+  100% { transform: scale(1) translateY(0) rotate(0); opacity: 1; }
+}
+
+/* 닫기 버튼 */
+.login-modal-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background-color: #eae4d9;
+  border: 2px solid #1a1a1a;
+  color: #444;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 2px 2px 0px #1a1a1a;
+  transition: transform 0.2s var(--ease-elastic), background-color 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.login-modal-close-btn:hover {
+  transform: scale(1.1) rotate(90deg);
+  background-color: var(--color-accent);
+  color: #fff;
+  border-color: #1a1a1a;
+  box-shadow: 3px 3px 0px #1a1a1a;
+}
+
+/* 좌측 상단 불똥 뱃지 */
+.login-flame-badge {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background-color: #eae4d9;
+  color: #111;
+  border: 2px solid #1a1a1a;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-family: var(--font-goblin);
+  font-size: 0.55rem;
+  font-weight: 800;
+  box-shadow: 2px 2px 0px #1a1a1a;
+}
+
+.login-badge-icon {
+  color: var(--color-accent);
+  fill: var(--color-accent);
+  animation: emberFlicker 0.25s infinite alternate ease-in-out;
+}
+
+/* 타이틀 & 서브 */
+.login-card-header {
+  text-align: left;
+}
+
+.login-modal-title {
+  font-size: 2.2rem;
+  line-height: 1.15;
+  margin-bottom: 10px;
+  color: #111;
+}
+
+.login-modal-subtitle {
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: #555;
+}
+
+/* =========================================
+   3. 로그인 브루탈리즘 입력 폼
+   ========================================= */
+.login-brutal-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.brutal-input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+}
+
+.brutal-input-label {
+  font-family: var(--font-goblin);
+  font-size: 0.55rem;
+  font-weight: 800;
+  color: #444;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.brutal-text-input {
+  width: 100%;
+  height: 48px;
+  background-color: #ffffff;
+  border: 2px solid #b5af9f;
+  border-radius: 12px;
+  color: #111;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 800;
+  padding: 0 16px;
+  outline: none;
+  transition: all 0.3s ease;
+  box-shadow: inset 1px 1px 3px rgba(0,0,0,0.06);
+}
+
+.brutal-text-input:focus {
+  border-color: var(--color-accent);
+  background-color: #ffffff;
+  box-shadow: inset 1px 1px 3px rgba(0,0,0,0.06), 0 0 12px rgba(255, 107, 53, 0.25);
+  transform: translateY(-2px);
+}
+
+/* 🌈 레인보우 로그인 버튼 */
+.login-action-brutal-btn {
+  width: 100%;
+  height: 52px;
+  background: linear-gradient(90deg, #ff4500, #ff8c00, #3a0dff, #ff4500);
+  background-size: 300% 300%;
+  color: #fff;
+  border: 2px solid #1a1a1a;
+  border-radius: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: var(--font-body);
+  font-weight: 900;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 4px 4px 0px #1a1a1a;
+  transition: all 0.2s cubic-bezier(0.175, 0.885, 0.45, 1.3);
+  animation: gradientFlow 8s infinite linear;
+}
+
+.login-action-brutal-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 6px 6px 0px #1a1a1a;
+  filter: brightness(1.1) drop-shadow(0 4px 10px rgba(255, 107, 53, 0.2));
+}
+
+.login-action-brutal-btn:active {
+  transform: translateY(2px);
+  box-shadow: 1px 1px 0px #1a1a1a;
+}
+
+/* =========================================
+   4. 푸터 영역 (돌아가기 버튼)
+   ========================================= */
+.login-modal-footer {
+  border-top: 2px dashed #b5af9f;
+  padding-top: 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.login-back-link-btn {
+  background-color: transparent;
+  border: none;
+  color: #555;
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.login-back-link-btn:hover {
+  color: var(--color-accent);
+  transform: translateX(-4px);
+}
+
+.login-signup-prompt {
+  font-size: 0.75rem;
+  color: #444;
+}
+
+.login-signup-prompt strong {
+  color: var(--color-accent);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* 모바일 모드 */
+@media (max-width: 480px) {
+  .login-modal-card {
+    padding: 30px 20px;
+    border-radius: 18px;
+  }
+  .login-modal-title {
+    font-size: 1.7rem;
+  }
+  .brutal-text-input {
+    height: 44px;
+  }
+  .login-action-brutal-btn {
+    height: 46px;
+    font-size: 0.9rem;
+  }
+}

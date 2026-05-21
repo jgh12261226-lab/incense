@@ -1,0 +1,578 @@
+/* ==========================================================================
+   1:1 RE-TREAT CONCIERGE - ConsultingModal.css (밝고 따뜻한 웜 샌드 베이지 고대비 테마)
+   네오 브루탈리즘 종이 질감과 아날로그 미색의 고급스러운 조화
+   ========================================================================== */
+
+/* 1. 백드롭 오버레이 (안개 속 깊은 쉼처럼 부드러운 흐림 처리) */
+.consulting-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(10, 10, 9, 0.65); /* 약간 노란 기가 도는 딥 차콜 */
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  padding: 20px;
+  animation: fadeInOverlay 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes fadeInOverlay {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* 2. 3D 입체 팝업 컨테이너 (따뜻한 아날로그 샌드 웜 베이지 & 네오 브루탈리즘) */
+.consulting-modal {
+  position: relative;
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  background: rgba(247, 244, 237, 0.98); /* 극도로 우아한 아날로그 크림 미색 */
+  border: 3px solid #1a1a1a;
+  border-radius: 20px;
+  box-shadow: 8px 8px 0px #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: #1e1e1e; /* 묵직한 고대비 가독성 확보 */
+}
+
+/* 팝업 최초 둥실 진입 모션 (통통 튀는 탄성 연출) */
+.jiggle-in {
+  animation: modalJiggle 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+@keyframes modalJiggle {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* 3. 우측 상단 닫기 버튼 */
+.consulting-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #eae4d9;
+  border: 2px solid #1a1a1a;
+  color: #444;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+  box-shadow: 2px 2px 0px #1a1a1a;
+}
+
+.consulting-close-btn:hover {
+  background: var(--color-accent, #ff6b35);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 3px 3px 0px #1a1a1a;
+}
+
+.consulting-close-btn:active {
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0px #1a1a1a;
+}
+
+/* 4. 신청 폼 레이아웃 */
+.consulting-form {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  max-height: 90vh;
+}
+
+/* 헤더 영역 */
+.consulting-header {
+  padding: 30px 30px 20px 30px;
+  border-bottom: 2px dashed #b5af9f;
+  background: rgba(238, 233, 222, 0.5);
+}
+
+.consulting-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 107, 53, 0.1);
+  color: var(--color-accent, #ff6b35);
+  border: 1.5px solid var(--color-accent, #ff6b35);
+  padding: 4px 10px;
+  border-radius: 30px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  margin-bottom: 12px;
+}
+
+.spin-slow {
+  animation: spin 6s linear infinite;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+.consulting-title {
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #111;
+  letter-spacing: -0.02em;
+  margin: 0 0 8px 0;
+}
+
+.consulting-subtitle {
+  font-size: 0.9rem;
+  color: #555;
+  line-height: 1.55;
+  margin: 0;
+}
+
+/* 5. 스크롤 가능한 입력 바디 영역 */
+.consulting-body-scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 25px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* 힙한 디자인의 커스텀 스크롤바 */
+.consulting-body-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+
+.consulting-body-scroll::-webkit-scrollbar-track {
+  background: rgba(238, 233, 222, 0.4);
+}
+
+.consulting-body-scroll::-webkit-scrollbar-thumb {
+  background: #c5beb1;
+  border-radius: 4px;
+}
+
+.consulting-body-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent, #ff6b35);
+}
+
+/* 폼 그룹 및 기본 입력 스타일 */
+.form-group-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 15px;
+}
+
+.form-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.margin-t-20 { margin-top: 20px; }
+.margin-t-25 { margin-top: 25px; }
+
+.form-label {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: #444;
+}
+
+/* 인풋/텍스트에리어 브루탈리즘 입체 적용 */
+.consulting-input,
+.consulting-textarea {
+  background: #ffffff;
+  border: 2px solid #b5af9f;
+  color: #111;
+  font-family: inherit;
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 0.92rem;
+  transition: all 0.2s ease;
+  box-shadow: inset 1px 1px 3px rgba(0,0,0,0.06);
+}
+
+.consulting-input::placeholder,
+.consulting-textarea::placeholder {
+  color: #888;
+}
+
+.consulting-input:focus,
+.consulting-textarea:focus {
+  outline: none;
+  border-color: var(--color-accent, #ff6b35);
+  box-shadow: inset 1px 1px 3px rgba(0,0,0,0.06), 0 0 8px rgba(255, 107, 53, 0.2);
+}
+
+.consulting-textarea {
+  min-height: 100px;
+  resize: none;
+  line-height: 1.5;
+}
+
+.char-counter {
+  align-self: flex-end;
+  font-size: 0.75rem;
+  color: #888;
+  margin-top: 2px;
+}
+
+/* 6. 현재 마음 고민 상태 칩 그리드 */
+.mood-chips-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.mood-chip-btn {
+  background: #fdfbf7;
+  border: 2px solid #d3cfc4;
+  border-radius: 12px;
+  padding: 14px 16px;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  box-shadow: 3px 3px 0px #1a1a1a;
+}
+
+.mood-chip-btn:hover {
+  border-color: #1a1a1a;
+  transform: translateY(-2px);
+  box-shadow: 5px 5px 0px #1a1a1a;
+}
+
+.mood-chip-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #222;
+}
+
+.mood-chip-desc {
+  font-size: 0.78rem;
+  color: #666;
+  line-height: 1.3;
+}
+
+/* 고민 상태 칩 활성화 (웜 피치 테마 반전 하이라이트) */
+.mood-chip-btn.active-mood {
+  background: rgba(255, 107, 53, 0.08);
+  border-color: var(--color-accent, #ff6b35);
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0px #1a1a1a;
+}
+
+.mood-chip-btn.active-mood .mood-chip-title {
+  color: var(--color-accent, #ff6b35);
+}
+
+.mood-chip-btn.active-mood .mood-chip-desc {
+  color: #444;
+}
+
+/* 7. 선호 향기 칩 그리드 */
+.scent-chips-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.scent-chip-btn {
+  background: #fdfbf7;
+  border: 2px solid #d3cfc4;
+  border-radius: 10px;
+  padding: 12px 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 2px 2px 0px #1a1a1a;
+}
+
+.scent-chip-btn:hover {
+  border-color: #1a1a1a;
+  transform: translateY(-1.5px);
+  box-shadow: 3.5px 3.5px 0px #1a1a1a;
+}
+
+.scent-checkbox {
+  width: 16px;
+  height: 16px;
+  border: 1.5px solid #a39e92;
+  border-radius: 4px;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+  color: #ffffff;
+  transition: all 0.15s ease;
+}
+
+.scent-chip-label {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* 향 칩 활성화 상태 */
+.scent-chip-btn.active-scent {
+  background: rgba(255, 107, 53, 0.06);
+  border-color: var(--color-accent, #ff6b35);
+  transform: translateY(0.5px);
+  box-shadow: 1px 1px 0px #1a1a1a;
+}
+
+.scent-chip-btn.active-scent .scent-checkbox {
+  background: var(--color-accent, #ff6b35);
+  border-color: var(--color-accent, #ff6b35);
+}
+
+.scent-chip-btn.active-scent .scent-chip-label {
+  color: var(--color-accent, #ff6b35);
+  font-weight: 700;
+}
+
+/* 8. 모달 푸터 액션 (네오 브루탈 스타일의 취소/제출) */
+.consulting-footer {
+  padding: 20px 30px 30px 30px;
+  border-top: 2px dashed #b5af9f;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  background: rgba(238, 233, 222, 0.5);
+}
+
+.consulting-btn {
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 12px 22px;
+  border-radius: 10px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* 취소 버튼 */
+.btn-close {
+  background: #eae4d9;
+  border: 2px solid #b5af9f;
+  color: #555;
+  box-shadow: 3px 3px 0px #1a1a1a;
+}
+
+.btn-close:hover {
+  background: #dfd9ce;
+  color: #222;
+  border-color: #1a1a1a;
+  transform: translateY(-2px);
+  box-shadow: 5px 5px 0px #1a1a1a;
+}
+
+.btn-close:active {
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0px #1a1a1a;
+}
+
+/* 제출 버튼 (번투칠 시그니처 웅장 피치) */
+.btn-submit {
+  background: var(--color-accent, #ff6b35);
+  border: 2px solid #1a1a1a;
+  color: #ffffff;
+  box-shadow: 4px 4px 0px #1a1a1a;
+}
+
+.btn-submit:hover {
+  background: #ff7d4d;
+  transform: translateY(-2px);
+  box-shadow: 6px 6px 0px #1a1a1a;
+}
+
+.btn-submit:active {
+  transform: translateY(1px);
+  box-shadow: 1px 1px 0px #1a1a1a;
+}
+
+/* ==========================================================================
+   9. 전광석화 성공 제출 뷰포트 (몽환적 스파클링 피드백)
+   ========================================================================== */
+.submit-success-view {
+  padding: 60px 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  animation: slideUpSuccess 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUpSuccess {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.success-lottie-ring {
+  position: relative;
+  width: 86px;
+  height: 86px;
+  background: rgba(255, 107, 53, 0.1);
+  border: 3px solid var(--color-accent, #ff6b35);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--color-accent, #ff6b35);
+  margin-bottom: 10px;
+  box-shadow: 0 0 20px rgba(255, 107, 53, 0.15);
+}
+
+/* 체크아이콘 드로잉 인 모션 */
+.check-draw-icon {
+  animation: popCheck 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.2s both;
+}
+
+@keyframes popCheck {
+  0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+/* 스파클링 특수 효과 */
+.success-lottie-sparks {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+}
+
+.succ-spark-1,
+.succ-spark-2 {
+  position: absolute;
+  color: var(--color-accent, #ff6b35);
+}
+
+.succ-spark-1 {
+  top: -10px;
+  right: -5px;
+  animation: sparkRotate 2s linear infinite, sparkFlash 1.5s ease-in-out infinite alternate;
+}
+
+.succ-spark-2 {
+  bottom: 0px;
+  left: -12px;
+  animation: sparkRotate 2.5s linear infinite reverse, sparkFlash 1.2s ease-in-out infinite alternate-reverse;
+}
+
+@keyframes sparkRotate {
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes sparkFlash {
+  0% { transform: scale(0.8); opacity: 0.3; }
+  100% { transform: scale(1.3); opacity: 1; }
+}
+
+.success-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: 0.25em;
+  color: var(--color-accent, #ff6b35);
+  margin: 0;
+}
+
+.submit-success-view h4 {
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: #111;
+  margin: 0;
+}
+
+.submit-success-view p {
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.success-sub {
+  font-size: 0.8rem;
+  color: #777;
+  letter-spacing: 0.05em;
+  margin-top: 10px;
+}
+
+/* ==========================================================================
+   10. 반응형 미디어 쿼리 (모바일 무결성 확보)
+   ========================================================================== */
+@media screen and (max-width: 600px) {
+  .consulting-modal {
+    max-height: 95vh;
+  }
+  
+  .consulting-header {
+    padding: 20px;
+  }
+  
+  .consulting-title {
+    font-size: 1.4rem;
+  }
+  
+  .consulting-body-scroll {
+    padding: 20px;
+    gap: 15px;
+  }
+  
+  .form-group-row {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .mood-chips-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .scent-chips-grid {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .consulting-footer {
+    padding: 15px 20px 20px 20px;
+    flex-direction: column-reverse;
+  }
+  
+  .consulting-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}

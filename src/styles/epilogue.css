@@ -1,0 +1,181 @@
+.epilogue-section {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--color-bg);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 100px 20px 40px 20px;
+  position: relative;
+}
+
+.epilogue-container {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.epilogue-header {
+  margin-bottom: 60px;
+}
+
+.epilogue-badge {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.25em;
+  color: var(--color-accent);
+  margin-bottom: 12px;
+  display: inline-block;
+}
+
+.epilogue-title {
+  font-size: 2.5rem;
+  line-height: 1.3;
+}
+
+.epilogue-subtitle {
+  font-family: var(--font-body);
+  font-size: 1.15rem;
+  color: var(--color-primary);
+  opacity: 0.8;
+  margin-top: 15px;
+}
+
+/* =========================================
+   1. 하이엔드 무드의 브루탈리즘 그리드 사양
+   ========================================= */
+.package-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  width: 100%;
+  margin-bottom: 80px;
+}
+
+.grid-item-card {
+  border: var(--border-thick);
+  border-radius: 20px;
+  padding: 35px 25px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 340px;
+  box-shadow: var(--shadow-3d);
+  transition: transform 0.4s var(--ease-elastic), box-shadow 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.grid-item-card:hover {
+  transform: translateY(-10px) rotate(1deg);
+  box-shadow: 12px 12px 0px var(--color-accent);
+}
+
+.card-badge {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 2px solid var(--color-bg);
+  margin-bottom: 20px;
+}
+
+.card-visual {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 15px 0;
+  overflow: hidden;
+}
+
+.showcase-card-img {
+  width: 100%;
+  max-width: 200px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 3px solid var(--color-bg);
+  box-shadow: 4px 4px 0px var(--color-accent);
+  transition: transform 0.4s var(--ease-elastic);
+}
+
+.grid-item-card:hover .showcase-card-img {
+  transform: scale(1.06) rotate(-1.5deg);
+}
+
+.card-info {
+  margin-top: 15px;
+}
+
+.card-title {
+  font-family: var(--font-goblin);
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+}
+
+.card-desc {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  line-height: 1.45;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+/* =========================================
+   2. 거대한 젤리 CTA 우뚝 솟아오름 (Rise)
+   ========================================= */
+.cta-trigger-wrap {
+  opacity: 0;
+  transform: translateY(60px) scale(0.9);
+  transition: opacity 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+              transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  margin-bottom: 80px;
+  pointer-events: none;
+}
+
+.cta-trigger-wrap.btn-rise {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+/* 3. 풋터 */
+.epilogue-footer {
+  width: 100%;
+  border-top: 2px dashed rgba(234, 228, 217, 0.15);
+  padding-top: 30px;
+  opacity: 0.5;
+}
+
+.epilogue-footer p {
+  font-size: 0.8rem;
+  letter-spacing: 0.05em;
+}
+
+@media (max-width: 900px) {
+  .package-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .grid-item-card {
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 600px) {
+  .epilogue-title {
+    font-size: 1.8rem;
+  }
+  .epilogue-header {
+    margin-bottom: 40px;
+  }
+}

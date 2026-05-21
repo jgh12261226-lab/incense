@@ -1,0 +1,463 @@
+/* ==========================================================================
+   🌡️ 인센스 챔버 열감 반응 잉크 모션 (Thermal Ink Reveal) 프리미엄 스타일시트
+   ========================================================================== */
+
+.reveal-container-scroll {
+  width: 100%;
+  height: 220vh; /* 부드럽고 묵직한 스크롤 진행도를 위한 넉넉한 깊이 */
+  position: relative;
+  background-color: var(--color-bg);
+}
+
+.reveal-sticky-viewport {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 1. 어둠 및 열원 아지랑이 */
+.darkness-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #090807;
+  z-index: 1;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+.incense-burn-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 550px;
+  height: 550px;
+  background: radial-gradient(circle, rgba(255, 107, 53, 0.15) 0%, rgba(255, 107, 53, 0.03) 45%, rgba(255, 107, 53, 0) 70%);
+  border-radius: 50%;
+  z-index: 2;
+  pointer-events: none;
+  mix-blend-mode: screen;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.reveal-content-wrap {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 5;
+  padding: 40px 20px;
+}
+
+/* 헤더 */
+.reveal-text-header {
+  text-align: center;
+  margin-bottom: 30px;
+  max-width: 800px;
+}
+
+.reveal-badge {
+  font-family: var(--font-body);
+  font-weight: 800;
+  font-size: 0.8rem;
+  letter-spacing: 0.25em;
+  color: var(--color-accent);
+  margin-bottom: 12px;
+  display: inline-block;
+}
+
+.reveal-title {
+  font-size: 2.3rem;
+  line-height: 1.35;
+  margin-bottom: 12px;
+}
+
+.reveal-description {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  color: var(--color-primary);
+  opacity: 0.7;
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.5;
+  word-break: keep-all;
+}
+
+/* =========================================
+   2. 시뮬레이션 그리드 레이아웃 (HUD + PLATE)
+   ========================================= */
+.thermal-simulation-grid {
+  display: grid;
+  grid-template-columns: 340px 460px;
+  gap: 50px;
+  width: 100%;
+  max-width: 900px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 15px;
+}
+
+/* =========================================
+   [좌측 모듈] 사이버네틱 아날로그 HUD
+   ========================================= */
+.thermal-scanner-hud {
+  background-color: rgba(15, 14, 13, 0.85);
+  border: var(--border-thick);
+  border-radius: 20px;
+  padding: 25px;
+  box-shadow: var(--shadow-3d);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+/* HUD 격자 무늬 백그라운드 디테일 */
+.thermal-scanner-hud::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    linear-gradient(rgba(234, 228, 217, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(234, 228, 217, 0.02) 1px, transparent 1px);
+  background-size: 10px 10px;
+  pointer-events: none;
+}
+
+.hud-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-accent);
+  border-bottom: 1px solid rgba(234, 228, 217, 0.1);
+  padding-bottom: 12px;
+}
+
+.hud-title {
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  font-weight: 800;
+}
+
+.hud-temp-display {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.temp-label-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.6;
+}
+
+.temp-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+}
+
+.temp-icon {
+  color: var(--color-accent);
+}
+
+.temp-number {
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--color-primary);
+  letter-spacing: -0.05em;
+  line-height: 1;
+}
+
+.temp-unit {
+  font-size: 1.8rem;
+  color: var(--color-accent);
+  margin-left: 2px;
+}
+
+/* HUD 진행도 세션 */
+.hud-progress-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.progress-bar-container {
+  width: 100%;
+  height: 8px;
+  background-color: rgba(234, 228, 217, 0.08);
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid rgba(234, 228, 217, 0.15);
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: var(--color-accent);
+  box-shadow: 0 0 10px var(--color-accent);
+  transition: width 0.1s linear;
+}
+
+.progress-value-wrap {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.65rem;
+  font-weight: 800;
+  opacity: 0.6;
+}
+
+/* 실시간 상태 박스 */
+.hud-status-box {
+  border-top: 1px solid rgba(234, 228, 217, 0.1);
+  padding-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.status-label {
+  font-size: 0.65rem;
+  font-weight: 800;
+  opacity: 0.6;
+  letter-spacing: 0.05em;
+}
+
+.status-indicator-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.status-text {
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+}
+
+/* =========================================
+   [우측 모듈] 수제 세라믹 열감 반응 챔버 플레이트
+   ========================================= */
+.chamber-thermal-plate {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  position: relative;
+}
+
+.chamber-plate-rim {
+  width: 100%;
+  height: 100%;
+  border-radius: 32px;
+  border: var(--border-thick);
+  background-color: #161512;
+  box-shadow: 
+    0 30px 60px rgba(0, 0, 0, 0.75),
+    inset 0 4px 20px rgba(0, 0, 0, 0.6);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 플레이트 그레인 텍스처 오버레이 */
+.chamber-plate-rim::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle at center, transparent 30%, rgba(0,0,0,0.8) 100%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+/* 열감 카메라 오버레이 */
+.thermal-camera-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  mix-blend-mode: screen;
+  transition: opacity 0.1s linear, background 0.1s linear;
+}
+
+.chamber-plate-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 4;
+}
+
+.thermal-active-core {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: #211f1a;
+  border: var(--border-thick);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.thermal-flame-icon {
+  color: var(--color-accent);
+  filter: drop-shadow(0 0 4px var(--color-accent));
+  animation: emberFlicker 0.25s infinite alternate ease-in-out;
+}
+
+/* =========================================
+   [비밀 메시지] 고성능 잉크 번짐 메시지 레이어
+   ========================================= */
+.ink-bleeding-message-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  z-index: 10;
+  transition: opacity 0.1s ease;
+}
+
+.ink-message-content {
+  border: 1px solid rgba(234, 228, 217, 0.15);
+  border-radius: 24px;
+  width: 90%;
+  height: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  background: radial-gradient(circle, rgba(9, 8, 7, 0.95) 0%, rgba(15, 14, 13, 0.98) 100%);
+  box-shadow: 
+    inset 0 0 40px rgba(255, 107, 53, 0.05),
+    0 10px 30px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  backdrop-filter: blur(8px);
+}
+
+.message-badge {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  font-weight: 800;
+  color: var(--color-accent);
+  margin-bottom: 15px;
+  opacity: 0.8;
+}
+
+.message-main {
+  font-size: 1.45rem;
+  line-height: 1.5;
+  color: var(--color-primary);
+  font-weight: 900;
+  margin-bottom: 15px;
+  word-break: keep-all;
+  text-shadow: 
+    0 0 8px rgba(255, 107, 53, 0.3),
+    2px 2px 4px rgba(0, 0, 0, 0.9);
+}
+
+.message-author {
+  font-size: 0.85rem;
+  color: var(--color-primary);
+  opacity: 0.5;
+  font-style: italic;
+}
+
+/* 스크롤 가이드 라벨 */
+.scroll-indicator-guide {
+  position: absolute;
+  bottom: 25px;
+  font-size: 0.65rem;
+  color: var(--color-primary);
+  opacity: 0.4;
+  letter-spacing: 0.1em;
+  z-index: 5;
+  pointer-events: none;
+  animation: bounceUpDown 1.2s infinite alternate ease-in-out;
+}
+
+.arrow-down {
+  color: var(--color-accent);
+  font-weight: 900;
+  margin-right: 2px;
+}
+
+@keyframes bounceUpDown {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(5px); }
+}
+
+/* =========================================
+   모바일 및 타블렛 반응형 대응
+   ========================================= */
+@media (max-width: 900px) {
+  .thermal-simulation-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    max-width: 480px;
+  }
+  .reveal-container-scroll {
+    height: 250vh; /* 수직 정렬로 인해 늘어난 레이아웃 스크롤 대비 */
+  }
+  .reveal-title {
+    font-size: 1.8rem;
+  }
+  .reveal-description {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .thermal-scanner-hud {
+    padding: 20px;
+  }
+  .temp-number {
+    font-size: 2.5rem;
+  }
+  .ink-message-content {
+    padding: 20px;
+  }
+  .message-main {
+    font-size: 1.05rem;
+  }
+  .message-badge {
+    margin-bottom: 10px;
+  }
+}
