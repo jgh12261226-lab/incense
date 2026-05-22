@@ -106,9 +106,9 @@ export default function CustomCursor() {
     const rgb = hexToRgb(color);
     
     if (rgb) {
-      // 텍스트 가독성을 최우선으로 지키기 위해 알파 값을 0.04(중심부) 및 0.005(주변부) 수준으로 설정
-      root.style.setProperty('--global-glow-color-rgba', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.04)`);
-      root.style.setProperty('--global-glow-color-dim-rgba', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.005)`);
+      // 모든 배경과 텍스트 위로 얹어짐에 따라, 더욱 극도의 가독성을 유지하기 위해 투명도를 3.5% (중심) 및 0.3% (외곽)로 초정밀 튜닝
+      root.style.setProperty('--global-glow-color-rgba', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.035)`);
+      root.style.setProperty('--global-glow-color-dim-rgba', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.003)`);
     }
   }, [hoveredColor]);
 

@@ -515,7 +515,7 @@ p {
   width: 100vw;
   height: 100vh;
   pointer-events: none; /* 유저 클릭 차단 금지 */
-  z-index: 1; /* 격자무늬 및 최하단 배경 위에 오되 본문 텍스트(z-index: 2 이상) 밑에 위치 */
+  z-index: 9997; /* 모든 섹션의 배경색에 묻히지 않도록 z-index를 최상위급으로 상향 */
   opacity: var(--global-glow-opacity, 0);
   transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1);
   background: radial-gradient(
