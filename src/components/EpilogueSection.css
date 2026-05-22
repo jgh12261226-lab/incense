@@ -209,12 +209,12 @@
   transform: translateY(-5px); /* scale(1.1) 대신 3D 위로 붕 뜨는 햅틱 모션 적용 */
   background-color: var(--color-accent);
   color: var(--color-bg);
-  box-shadow: 8px 8px 0px var(--color-primary); /* 그림자가 깊어져 입체감이 살아남 */
+  box-shadow: 6px 6px 0px rgba(0, 0, 0, 0.65); /* 과한 흰색 그림자 대신 차분하고 세련된 다크 3D 그림자로 완화 */
 }
 
 .slider-arrow-btn:active {
   transform: translateY(1px); /* 누를 때의 쫀득한 눌림 햅틱 */
-  box-shadow: 2px 2px 0px var(--color-primary);
+  box-shadow: 2px 2px 0px rgba(0, 0, 0, 0.65);
 }
 
 .prev-btn {
