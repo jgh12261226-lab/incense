@@ -68,7 +68,7 @@
   align-items: center;
   text-align: center;
   z-index: 10;
-  padding: 180px 20px 80px 20px; /* 상단 고정 헤더(90px)와의 쾌적한 여백을 위해 상단 패딩을 180px로 여유롭게 확장 */
+  padding: 130px 20px 80px 20px; /* 상단 고정 헤더와의 여백을 130px로 콤팩트하게 조율 */
 }
 
 /* 2. 헤드라인 래퍼 */
@@ -788,7 +788,7 @@
 /* 모바일 화면 최적화 (3:4 비율 정밀 유지 반응형) */
 @media (max-width: 768px) {
   .hero-content {
-    padding: 140px 15px 50px 15px; /* 모바일 고정 헤더(70px)와의 넉넉한 간격 유지를 위해 상단 패딩을 140px로 더욱 확장 */
+    padding: 100px 15px 50px 15px; /* 모바일 고정 헤더와의 간격을 100px로 조율 */
   }
   .hero-title {
     font-size: 1.95rem;
