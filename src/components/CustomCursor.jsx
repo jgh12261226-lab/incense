@@ -1,6 +1,25 @@
 import React, { useEffect, useState, useRef } from 'react';
 import './CustomCursor.css';
 
+// Hex 색상 코드를 R, G, B로 추출하는 헬퍼 함수
+const hexToRgb = (hex) => {
+  if (!hex) return null;
+  const cleanHex = hex.replace('#', '');
+  if (cleanHex.length === 3) {
+    const r = parseInt(cleanHex[0] + cleanHex[0], 16);
+    const g = parseInt(cleanHex[1] + cleanHex[1], 16);
+    const b = parseInt(cleanHex[2] + cleanHex[2], 16);
+    return { r, g, b };
+  }
+  if (cleanHex.length === 6) {
+    const r = parseInt(cleanHex.substring(0, 2), 16);
+    const g = parseInt(cleanHex.substring(2, 4), 16);
+    const b = parseInt(cleanHex.substring(4, 6), 16);
+    return { r, g, b };
+  }
+  return null;
+};
+
 export default function CustomCursor() {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [trail1, setTrail1] = useState({ x: 0, y: 0 });
@@ -21,6 +40,10 @@ export default function CustomCursor() {
     const handleMouseMove = (e) => {
       setPosition({ x: e.clientX, y: e.clientY });
       setHidden(false);
+
+      // 최상위 documentElement에 뷰포트 좌표를 직접 전달하여 React의 잦은 렌더링 영향 최소화
+      document.documentElement.style.setProperty('--global-mouse-x', `${e.clientX}px`);
+      document.documentElement.style.setProperty('--global-mouse-y', `${e.clientY}px`);
     };
 
     const handleMouseLeave = () => {
@@ -75,6 +98,29 @@ export default function CustomCursor() {
       cancelAnimationFrame(requestRef.current);
     };
   }, [isHovered]);
+
+  // 전역 앰비언트 글로우 색상 실시간 연동
+  useEffect(() => {
+    const root = document.documentElement;
+    const color = hoveredColor || '#FF6B35'; // 호버된 색이 없으면 기본 네온 오렌지(#FF6B35) 적용
+    const rgb = hexToRgb(color);
+    
+    if (rgb) {
+      // 텍스트 가독성을 최우선으로 지키기 위해 알파 값을 0.04(중심부) 및 0.005(주변부) 수준으로 설정
+      root.style.setProperty('--global-glow-color-rgba', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.04)`);
+      root.style.setProperty('--global-glow-color-dim-rgba', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.005)`);
+    }
+  }, [hoveredColor]);
+
+  // 마우스 화면 진입/이탈 상태에 따른 글로우 투명도 제어
+  useEffect(() => {
+    const root = document.documentElement;
+    if (hidden) {
+      root.style.setProperty('--global-glow-opacity', '0');
+    } else {
+      root.style.setProperty('--global-glow-opacity', '1');
+    }
+  }, [hidden]);
 
   // 불꽃 일렁임(wobble) 모션 제어
   useEffect(() => {

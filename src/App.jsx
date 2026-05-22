@@ -176,6 +176,9 @@ export default function App() {
       {/* 1. 아날로그 미세 감성 그레인 노이즈 오버레이 */}
       <div className="grain-overlay" />
 
+      {/* 전역 마우스 앰비언트 글로우 백라이트 레이어 */}
+      <div className="global-ambient-glow-layer" />
+
       {/* 전역 고정 스크롤 인디케이터 (우하단 항상 표시, 바닥 도달 시 페이드아웃) */}
       <div className={`scroll-indicator ${isAtBottom ? 'is-bottom' : ''}`}>
         <span className="scroll-text">DOWN TO BURN</span>

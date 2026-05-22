@@ -505,3 +505,27 @@ p {
   }
 }
 
+/* =========================================
+   전역 마우스 앰비언트 글로우 레이어 (Ambient Glow)
+   ========================================= */
+.global-ambient-glow-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  pointer-events: none; /* 유저 클릭 차단 금지 */
+  z-index: 1; /* 격자무늬 및 최하단 배경 위에 오되 본문 텍스트(z-index: 2 이상) 밑에 위치 */
+  opacity: var(--global-glow-opacity, 0);
+  transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+  background: radial-gradient(
+    circle 380px at var(--global-mouse-x, 50%) var(--global-mouse-y, 50%),
+    var(--global-glow-color-rgba, rgba(255, 107, 53, 0.04)) 0%,
+    var(--global-glow-color-dim-rgba, rgba(255, 107, 53, 0.005)) 50%,
+    transparent 100%
+  );
+  mix-blend-mode: screen; /* 다크 모드에 어우러지게 밝은 부분 합성 */
+  will-change: background; /* GPU 하드웨어 가속 유도 */
+}
+
+
