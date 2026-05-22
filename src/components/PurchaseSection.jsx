@@ -246,7 +246,6 @@ export default function PurchaseSection({ isIgnited, onIgnite, addToCart, select
               onMouseMove={handleCardMouseMove}
               onMouseLeave={handleCardMouseLeave}
             >
-              <div className="bundle-fire-ribbon">35% BUNDLE OFF</div>
               <div className="option-checkbox">
                 {selectedOption === 'bundle' && <Check size={14} className="check-icon" />}
               </div>
@@ -256,6 +255,7 @@ export default function PurchaseSection({ isIgnited, onIgnite, addToCart, select
                 <p className="option-card-desc">스틱의 깊은 향과 틴 캔의 3D 뚜껑 부유 모션 시너지를 한 번에 소장</p>
               </div>
               <div className="option-price-box">
+                <div className="bundle-fire-ribbon inline-ribbon">35% BUNDLE OFF</div>
                 <span className="card-original-price strike-through">39,000원</span>
                 <span className="card-final-price discount-price">25,300원</span>
               </div>

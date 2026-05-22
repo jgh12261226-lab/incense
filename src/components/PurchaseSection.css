@@ -294,9 +294,30 @@
   animation: ribbonPulse 1.5s infinite alternate ease-in-out, gradientFlow 6s infinite linear;
 }
 
+/* 신규: 가격 위에 차분히 정돈되어 안착하는 인라인 라벨 스타일 */
+.bundle-fire-ribbon.inline-ribbon {
+  position: static;
+  display: inline-block;
+  align-self: flex-end;
+  margin-top: 2px;
+  margin-bottom: 8px;
+  white-space: nowrap;
+  font-size: 0.52rem;
+  padding: 3px 8px;
+  box-shadow: 1.5px 1.5px 0 #000;
+  border-radius: 6px;
+  transform: rotate(-1.5deg);
+  animation: inlineRibbonPulse 1.5s infinite alternate ease-in-out, gradientFlow 6s infinite linear;
+}
+
 @keyframes ribbonPulse {
   0% { transform: rotate(2deg) scale(1); }
   100% { transform: rotate(2deg) scale(1.05); filter: drop-shadow(0 0 4px rgba(255, 69, 0, 0.6)); }
+}
+
+@keyframes inlineRibbonPulse {
+  0% { transform: rotate(-1.5deg) scale(1); }
+  100% { transform: rotate(-1.5deg) scale(1.04); filter: drop-shadow(0 0 5px rgba(255, 69, 0, 0.5)); }
 }
 
 .strike-through {
@@ -323,20 +344,6 @@
 
 .promo-option-card.active-option:hover {
   animation: none;
-}
-
-/* 3번째 추천 번들 카드가 활성화되었을 때의 극적인 무지개 오로라 및 네온 광채 효과 */
-.promo-option-card.bundle-promo-card.active-option {
-  border-color: #ff4500;
-  box-shadow: 0px 0px 25px rgba(255, 69, 0, 0.45), 6px 6px 0px #000;
-  background: linear-gradient(90deg, rgba(255, 69, 0, 0.12), rgba(255, 140, 0, 0.12), rgba(58, 13, 255, 0.12), rgba(255, 69, 0, 0.12));
-  background-size: 300% 300%;
-  animation: focusBounce 0.45s cubic-bezier(0.175, 0.885, 0.45, 1.35) forwards,
-             gradientFlow 8s infinite linear;
-}
-
-.promo-option-card.bundle-promo-card.active-option:hover {
-  animation: gradientFlow 8s infinite linear;
 }
 
 .promo-option-card.active-option .option-checkbox {
